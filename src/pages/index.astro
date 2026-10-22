@@ -1,0 +1,412 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import ToolsSection from '../components/ToolsSection.astro';
+import { getCollection } from 'astro:content';
+import { 
+  Zap, 
+  Sparkles, 
+  TrendingUp, 
+  ChevronRight, 
+  ExternalLink, 
+  CalendarDays, 
+  Layers,
+  BookOpen,
+  ArrowRight,
+  Clock
+} from 'lucide-astro';
+
+// 从 Content Collection 获取并按综合评分从高到低严格排序评测文章
+const allReviews = await getCollection('reviews');
+const sortedReviews = allReviews
+  .sort((a, b) => (a.data.rank ?? 99) - (b.data.rank ?? 99))
+  .slice(0, 12);
+
+const featuredReviews = sortedReviews.filter(r => r.data.featured);
+
+// 获取最新新手教程与资讯文章（按发布时间降序）
+const allTutorials = await getCollection('tutorials');
+const latestTutorials = (allTutorials || [])
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
+---
+
+<Layout
+  title="2026 最专业梯子代理评测与翻墙指南 - 节点实验室"
+  description="NodeLab 节点实验室 — 基于多节点真实晚高峰环境，提供最专业的 VPN/机场/翻墙梯子评测、IPLC 专线推荐、流媒体解锁测试、Clash/Sing-box 客户端指南，以及 IP 纯净度检测等网络工具聚合。"
+  type="website"
+>
+  <!-- ============================================ -->
+  <!--  首页主体区域：左侧主内容与右侧粘性侧边栏    -->
+  <!-- ============================================ -->
+  <section class="relative py-12 md:py-16 lg:py-20">
+    <!-- 背景渐变装饰球：将 overflow-hidden 封装在独立背景层内，避免祖先容器溢出裁剪破坏 position: sticky 滚动计算 -->
+    <div aria-hidden="true" class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-sky-500/10 dark:bg-sky-500/8 rounded-full blur-3xl"></div>
+      <div class="absolute top-0 right-0 w-72 h-72 bg-indigo-500/8 dark:bg-indigo-600/10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 left-1/3 w-80 h-80 bg-emerald-500/5 dark:bg-emerald-500/8 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 左右分栏网格系统：顶端对齐 items-start，消除大屏幕下的垂直空白与侧边栏错位 -->
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_340px] xl:grid-cols-[1fr_360px] gap-8 xl:gap-12 items-start">
+        
+        <!-- 左侧主内容包裹容器 (Main Container) -->
+        <div id="main-container" class="main-container min-h-0 lg:min-h-[980px] space-y-10 clearfix">
+          
+          <!-- 文案主体区 -->
+          <div class="space-y-8">
+            <!-- 角标标语 -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 dark:bg-sky-500/15 border border-sky-500/25 text-sky-600 dark:text-sky-400 text-sm font-semibold">
+              <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <Zap class="w-4 h-4" />
+              <span>7×24h 全球节点自动化监测 · 2026 持续实测更新</span>
+            </div>
+
+            <!-- 主标题 H1 -->
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08]">
+              <span class="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-white dark:via-slate-100 dark:to-slate-300 bg-clip-text text-transparent">
+                找到最快最稳的
+              </span>
+              <br />
+              <span class="bg-gradient-to-r from-sky-500 via-indigo-500 to-cyan-400 bg-clip-text text-transparent">
+                机场与梯子节点
+              </span>
+            </h1>
+
+            <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+              节点实验室持续追踪全网 <strong class="text-slate-900 dark:text-white font-bold">20+ 顶级机场梯子</strong> 的晚高峰真实节点速度、IPLC 专线稳定性、Netflix/Disney+ 流媒体解锁率，与 ChatGPT/Claude 接入实测，助你精准选择最适合的代理服务。
+            </p>
+
+            <!-- 核心亮点 -->
+            <ul class="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+              {[
+                '✅ 每日 20:30~22:30 晚高峰自动化速度基准测试',
+                '✅ 独立实测 Netflix / Disney+ / YouTube 4K/8K 解锁状态',
+                '✅ IPLC 纯专线 vs BGP 隧道全维度横向对比矩阵',
+                '✅ 包含优惠码和返利通道，同等服务帮你省钱',
+              ].map(item => (
+                <li class="flex items-start gap-2">
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <!-- CTA 按钮组 -->
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+              <a
+                href="/comparison-matrix"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 transition-all hover:-translate-y-0.5 text-sm"
+              >
+                <Layers class="w-4 h-4" />
+                <span>查看完整评测矩阵对比</span>
+                <ChevronRight class="w-4 h-4" />
+              </a>
+              <a
+                href="/reviews"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:border-sky-400 hover:text-sky-600 dark:hover:text-sky-400 transition-all hover:-translate-y-0.5 shadow-sm text-sm"
+              >
+                <span>所有机场评测列表</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 实时核心指标与信任背书栏 -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 py-4 px-5 rounded-2xl glass-card border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">晚高峰测速</div>
+              <div class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mt-0.5 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>自动化基准</span>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">专线网络</div>
+              <div class="text-sm sm:text-base font-extrabold text-sky-600 dark:text-sky-400 mt-0.5">IPLC / IEPL</div>
+            </div>
+            <div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">4K/8K 解锁率</div>
+              <div class="text-sm sm:text-base font-extrabold text-emerald-600 dark:text-emerald-400 mt-0.5">99.8% 实测</div>
+            </div>
+            <div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">收录样本库</div>
+              <div class="text-sm sm:text-base font-extrabold text-indigo-600 dark:text-indigo-400 mt-0.5">20+ 款梯子</div>
+            </div>
+          </div>
+
+          <!-- 最新精选深度评测卡片区：与右侧侧边栏并排，彻底消除左侧空白 -->
+          {sortedReviews.length > 0 && (
+            <div class="pt-6 border-t border-slate-200/80 dark:border-slate-800/60">
+              <div class="flex items-end justify-between mb-5">
+                <div>
+                  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 mb-2">
+                    <Sparkles class="w-3.5 h-3.5" />
+                    <span>最新精选深度评测</span>
+                  </div>
+                  <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                    机场梯子精选深度评测
+                  </h2>
+                </div>
+                <a href="/reviews" class="text-sm text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1 font-medium">
+                  <span>查看全部</span>
+                  <ChevronRight class="w-4 h-4" />
+                </a>
+              </div>
+
+              <!-- 双列评测卡片网格，自适应适配主内容区 -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {sortedReviews.map((review, idx) => (
+                  <article class="glass-card rounded-2xl border border-slate-200 dark:border-slate-800 p-5 hover:shadow-md hover:border-sky-300 dark:hover:border-sky-700 transition-all duration-200 hover:-translate-y-0.5 group flex flex-col justify-between">
+                    
+                    <div>
+                      <!-- 卡片顶部：左侧排名序号标签 + 专属角标，右侧综合评分 -->
+                      <div class="flex items-center justify-between gap-2 mb-2.5">
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                          <span class={`inline-flex items-center justify-center px-2 py-0.5 rounded-lg text-xs font-black font-mono ${
+                            (review.data.rank ?? idx + 1) === 1
+                              ? 'bg-amber-500 text-white shadow-sm shadow-amber-500/30'
+                              : (review.data.rank ?? idx + 1) === 2
+                              ? 'bg-slate-400 text-white shadow-sm'
+                              : (review.data.rank ?? idx + 1) === 3
+                              ? 'bg-amber-700/80 text-white shadow-sm'
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                          }`}>
+                            #{review.data.rank ?? idx + 1}
+                          </span>
+                          {review.data.badge && (
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                              {review.data.badge}
+                            </span>
+                          )}
+                        </div>
+                        <span class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">
+                          {Number(review.data.rating.overall).toFixed(1)} 分
+                        </span>
+                      </div>
+
+                      <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors mb-1.5 leading-snug">
+                        <a href={`/reviews/${review.id}/`}>{review.data.title}</a>
+                      </h3>
+
+                      <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed mb-3">
+                        {review.data.description}
+                      </p>
+                    </div>
+
+                    <div>
+                      <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pb-3 mb-3 border-b border-slate-100 dark:border-slate-800">
+                        <span class="flex items-center gap-1 text-[11px]">
+                          <CalendarDays class="w-3.5 h-3.5" />
+                          <time datetime={new Date(review.data.pubDate).toISOString()}>
+                            {new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(review.data.pubDate))}
+                          </time>
+                        </span>
+                        <span class="flex items-center gap-1">
+                          <span class="text-emerald-600 dark:text-emerald-400 font-bold font-mono">
+                            {Number(review.data.rating.overall).toFixed(1)}
+                          </span>
+                          <span class="text-slate-400 text-[11px]">/ 10</span>
+                        </span>
+                      </div>
+
+                      <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-1">
+                          {review.data.streamingUnlock.slice(0, 2).map((s) => (
+                            <span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                              {s}
+                            </span>
+                          ))}
+                          {review.data.streamingUnlock.length > 2 && (
+                            <span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-400">
+                              +{review.data.streamingUnlock.length - 2}
+                            </span>
+                          )}
+                        </div>
+                        <a
+                          href={`/reviews/${review.id}/`}
+                          class="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-0.5"
+                        >
+                          <span>阅读评测</span>
+                          <ChevronRight class="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                    </div>
+
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
+
+        </div>
+
+        <!-- 右侧侧边栏：移动端自然堆叠，桌面端 lg:sticky 吸顶平滑跟随 -->
+        <aside class="block mt-10 lg:mt-0">
+          <div class="lg:sticky lg:top-24 space-y-6">
+            <Sidebar />
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!--  新手必读与最新教程板块 (SEO 长尾词与内容沉淀)  -->
+  <!-- ============================================ -->
+  <section class="py-12 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/50 dark:bg-[#070b12]/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 模块标题栏与“查看更多文章”按钮 -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-semibold mb-2">
+            <BookOpen class="w-3.5 h-3.5" />
+            <span>知识库 &amp; 实操避坑指南</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            新手必读与最新教程
+          </h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            覆盖 Clash / 小火箭客户端配置、4K 流媒体全区解锁及专线原理，手把手带你极速进阶
+          </p>
+        </div>
+
+        <a
+          href="/tutorials"
+          class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-sky-600 dark:text-sky-400 hover:text-white bg-sky-50 hover:bg-sky-600 dark:bg-sky-950/60 dark:hover:bg-sky-500 border border-sky-200 dark:border-sky-800/60 transition-all duration-200 group self-start sm:self-auto shrink-0 shadow-sm"
+        >
+          <span>查看更多文章</span>
+          <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-150" />
+        </a>
+      </div>
+
+      <!-- 教程文章卡片网格 (3-4 篇) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {latestTutorials.map((article) => {
+          const catColors = {
+            '客户端教程': 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30',
+            '流媒体解锁': 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30',
+            '技术科普': 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
+          }[article.data.category] || 'bg-slate-500/15 text-slate-600 dark:text-slate-400 border-slate-500/30';
+
+          const formattedDate = article.data.pubDate.toLocaleDateString('zh-CN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+          });
+
+          return (
+            <article class="group flex flex-col bg-white dark:bg-[#0c121e] rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:shadow-xl hover:border-sky-500/40 dark:hover:border-sky-500/40 transition-all duration-300 overflow-hidden">
+              <!-- 缩略图区域 -->
+              <a href={`/tutorials/${article.id}/`} class="relative block aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-900">
+                {article.data.image ? (
+                  <img
+                    src={article.data.image}
+                    alt={article.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-sky-950 text-sky-400">
+                    <BookOpen class="w-10 h-10 opacity-50" />
+                  </div>
+                )}
+                <!-- 分类标签浮层 -->
+                <span class={`absolute top-3 left-3 px-2.5 py-1 rounded-lg text-xs font-bold border backdrop-blur-md ${catColors}`}>
+                  {article.data.category}
+                </span>
+              </a>
+
+              <!-- 内容区域 -->
+              <div class="flex-1 p-5 flex flex-col justify-between">
+                <div>
+                  <!-- 日期与阅读时间 -->
+                  <div class="flex items-center gap-3 text-xs text-slate-400 dark:text-slate-500 mb-2.5">
+                    <span class="flex items-center gap-1">
+                      <CalendarDays class="w-3.5 h-3.5" />
+                      <time datetime={article.data.pubDate.toISOString()}>{formattedDate}</time>
+                    </span>
+                    {article.data.readTime && (
+                      <span class="flex items-center gap-1">
+                        <Clock class="w-3.5 h-3.5" />
+                        <span>{article.data.readTime}</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <!-- 标题 -->
+                  <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors line-clamp-2 leading-snug">
+                    <a href={`/tutorials/${article.id}/`}>
+                      {article.data.title}
+                    </a>
+                  </h3>
+
+                  <!-- 摘要 -->
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+                    {article.data.description}
+                  </p>
+                </div>
+
+                <!-- 底部阅读全文按钮 -->
+                <div class="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
+                  <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">
+                    深度教程
+                  </span>
+                  <a
+                    href={`/tutorials/${article.id}/`}
+                    class="text-xs font-bold text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
+                  >
+                    <span>阅读全文</span>
+                    <ChevronRight class="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!--  工具集合区                                  -->
+  <!-- ============================================ -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <ToolsSection />
+  </div>
+
+  <!-- ============================================ -->
+  <!--  快速导引 / 新手必读分类导航区               -->
+  <!-- ============================================ -->
+  <section class="py-12 border-t border-slate-200/80 dark:border-slate-800/60 bg-gradient-to-b from-transparent to-sky-50/30 dark:to-sky-950/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">新手必读 · 按需快速导航</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1.5">根据你的需求直达最适合的机场类型与评测指南</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {[
+          { name: '纯 IPLC 专线', desc: '最稳不走公网', emoji: '🔒', href: '/category/iplc/' },
+          { name: '4K 流媒体首选', desc: 'Netflix/Disney+', emoji: '🎬', href: '/category/streaming/' },
+          { name: 'ChatGPT / AI', desc: 'GPT-4o Claude 专线', emoji: '🤖', href: '/category/ai/' },
+          { name: '低延迟电竞', desc: '游戏稳定低 Ping', emoji: '🎮', href: '/category/gaming/' },
+          { name: '高性价比平价', desc: '月付 5.6 元起', emoji: '💰', href: '/category/budget/' },
+          { name: '企业跨境专用', desc: '原生住宅 IP', emoji: '🏢', href: '/category/enterprise/' },
+        ].map((cat) => (
+          <a
+            href={cat.href}
+            class="flex flex-col items-center gap-2 p-4 rounded-2xl glass-card border border-slate-200 dark:border-slate-800 hover:border-sky-400 dark:hover:border-sky-600 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 text-center group"
+          >
+            <span class="text-3xl group-hover:scale-110 transition-transform duration-200">{cat.emoji}</span>
+            <div>
+              <div class="text-sm font-bold text-slate-900 dark:text-white">{cat.name}</div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{cat.desc}</div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>

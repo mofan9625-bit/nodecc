@@ -1,0 +1,114 @@
+---
+import { 
+  Globe2, Cpu, Wifi, Shield, Download, ArrowRight, 
+  ExternalLink, Search, Zap, Lock
+} from 'lucide-astro';
+
+const tools = [
+  {
+    id: 'ip-check',
+    category: 'IP 与网络检测',
+    icon: Globe2,
+    iconColor: 'text-sky-500 bg-sky-500/10',
+    items: [
+      { id: 'ip', name: 'IP 属地与伪装度检测', desc: '查询当前 IP 归属、ISP、风险评分及 TOR/DC 标记', url: 'https://ipcheck.ing/', external: true },
+      { id: 'webrtc', name: 'WebRTC 泄漏测试', desc: '检测浏览器 WebRTC 是否泄露本机真实 IP', url: 'https://browserleaks.com/webrtc', external: true },
+      { id: 'dns', name: 'DNS 泄漏检测', desc: '验证 DNS 请求是否全部走代理通道，防止流量暴露', url: 'https://dnsleaktest.com/', external: true },
+    ],
+  },
+  {
+    id: 'speed-test',
+    category: '速度与延迟测试',
+    icon: Zap,
+    iconColor: 'text-amber-500 bg-amber-500/10',
+    items: [
+      { id: 'speedtest', name: 'Speedtest.net 速度测试', desc: '全球节点 Ookla 基准下行/上行速度测试', url: 'https://www.speedtest.net/', external: true },
+      { id: 'fast', name: 'Fast.com Netflix 真实测速', desc: 'Netflix CDN 网络下载速度——反映真实流媒体体验', url: 'https://fast.com/', external: true },
+      { id: 'ping', name: 'Ping.pe 节点延迟矩阵', desc: '从全球 30+ 城市同时 ping 目标主机，全景网络质量', url: 'https://ping.pe/', external: true },
+    ],
+  },
+  {
+    id: 'clients',
+    category: '客户端下载聚合',
+    icon: Download,
+    iconColor: 'text-emerald-500 bg-emerald-500/10',
+    items: [
+      { id: 'clash', name: 'Clash Verge Rev (Win/Mac/Linux)', desc: '最活跃的开源 Clash Meta 图形客户端，支持全协议分流，推荐首选', url: 'https://github.com/clash-verge-rev/clash-verge-rev/releases', external: true },
+      { id: 'singbox', name: 'Sing-box 通用核心客户端', desc: '支持 VLESS/TUIC/Hysteria2 的新世代通用代理内核与图形端', url: 'https://github.com/SagerNet/sing-box/releases', external: true },
+      { id: 'ios', name: 'Shadowrocket (iOS / 小火箭)', desc: '苹果 iOS 端最佳轻量代理客户端，规则分流完善，需美区 Apple ID', url: 'https://apps.apple.com/app/shadowrocket/id932747118', external: true },
+      { id: 'surge', name: 'Surge 5 (iOS/Mac)', desc: '专业级网络调试与代理神器，具备顶级抓包与智能规则调度', url: 'https://nssurge.com/', external: true },
+    ],
+  },
+  {
+    id: 'privacy',
+    category: '隐私与安全加固',
+    icon: Shield,
+    iconColor: 'text-violet-500 bg-violet-500/10',
+    items: [
+      { id: 'privacytests', name: 'PrivacyTests.org 浏览器隐私测试', desc: '全维度检测浏览器指纹、Cookie 隔离与追踪防护评级', url: 'https://privacytests.org/', external: true },
+      { id: 'mullvad', name: 'Mullvad 浏览器指纹检测', desc: 'Tor 项目出品的浏览器指纹唯一性测试工具', url: 'https://mullvad.net/en/browser-checker', external: true },
+    ],
+  },
+];
+---
+
+<section id="tools-utilities" class="my-12 scroll-mt-24">
+  <div class="mb-6">
+    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-2">
+      <Cpu class="w-3.5 h-3.5" />
+      <span>网络工具集</span>
+    </div>
+    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+      常用科学上网与网络检测工具
+    </h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+      精选 IP 检测、延迟测速、DNS 泄漏检测及全平台主流客户端官方下载通道。
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {tools.map((group) => (
+      <div id={group.id} class="glass-card rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm scroll-mt-28">
+        <div class="flex items-center gap-2.5 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+          <div class={`p-2 rounded-xl ${group.iconColor}`}>
+            <group.icon class="w-4 h-4" />
+          </div>
+          <h3 class="font-bold text-sm text-slate-900 dark:text-white">{group.category}</h3>
+        </div>
+
+        <ul class="space-y-3">
+          {group.items.map((tool) => (
+            <li id={tool.id} class="scroll-mt-32">
+              <a
+                href={tool.url}
+                target={tool.external ? '_blank' : undefined}
+                rel={tool.external ? 'noopener noreferrer nofollow' : undefined}
+                class="flex items-start gap-3 group p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors -mx-2"
+              >
+                <div class="mt-0.5 flex-shrink-0 w-5 h-5 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-sky-500/10 group-hover:text-sky-500 transition-colors">
+                  {tool.external 
+                    ? <ExternalLink class="w-3.5 h-3.5" />
+                    : <ArrowRight class="w-3.5 h-3.5" />
+                  }
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors flex items-center gap-2">
+                    <span>{tool.name}</span>
+                    {tool.external && (
+                      <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-500/10 text-sky-600 dark:text-sky-400 font-normal">
+                        官方通道
+                      </span>
+                    )}
+                  </div>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
+                    {tool.desc}
+                  </p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>

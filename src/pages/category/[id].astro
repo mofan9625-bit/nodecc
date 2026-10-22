@@ -1,0 +1,281 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { CATEGORIES, filterReviewsForCategory } from '../../data/categories';
+import { getCollection } from 'astro:content';
+import {
+  Sparkles,
+  ChevronRight,
+  CalendarDays,
+  CheckCircle2,
+  ExternalLink,
+  Layers,
+  ArrowLeft,
+  ShieldCheck,
+  Zap,
+  HelpCircle,
+  BarChart3
+} from 'lucide-astro';
+
+export async function getStaticPaths() {
+  const allReviews = await getCollection('reviews');
+  return Object.keys(CATEGORIES).map((id) => ({
+    params: { id },
+    props: {
+      category: CATEGORIES[id],
+      reviewItems: filterReviewsForCategory(id, allReviews),
+      allCategories: Object.values(CATEGORIES)
+    }
+  }));
+}
+
+const { category, reviewItems, allCategories } = Astro.props;
+const otherCategories = allCategories.filter((c) => c.id !== category.id);
+---
+
+<Layout
+  title={category.seoTitle}
+  description={category.seoDesc}
+  type="website"
+>
+  <!-- ======================================================== -->
+  <!--  独立分类聚合页：采用单栏宽版权威排版，彻底消除侧边栏重复  -->
+  <!-- ======================================================== -->
+  <section class="relative py-10 md:py-14 lg:py-16">
+    <!-- 背景光晕装饰 -->
+    <div aria-hidden="true" class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-sky-500/10 dark:bg-sky-500/8 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/3 right-0 w-80 h-80 bg-indigo-500/8 dark:bg-indigo-600/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- 单栏宽版容器：居中 max-w-5xl，带来深度评测智库的高端质感 -->
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      
+      <!-- 面包屑导航 -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+        <a href="/" class="hover:text-sky-600 dark:hover:text-sky-400 flex items-center gap-1">
+          <ArrowLeft class="w-3.5 h-3.5" />
+          <span>首页</span>
+        </a>
+        <ChevronRight class="w-3 h-3 text-slate-400" />
+        <a href="/category" class="hover:text-sky-600 dark:hover:text-sky-400">按需分类导航</a>
+        <ChevronRight class="w-3 h-3 text-slate-400" />
+        <span class="text-slate-900 dark:text-white font-medium">{category.name}</span>
+      </nav>
+
+      <!-- 模块一：分类权威导读与技术规格背书 (Hero Header) -->
+      <header class="glass-card rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 lg:p-10 relative overflow-hidden shadow-sm">
+        <div class="flex items-center gap-2.5 mb-3 flex-wrap">
+          <span class="text-3xl sm:text-4xl">{category.emoji}</span>
+          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+            {category.badge}
+          </span>
+          <span class="text-xs text-slate-500 dark:text-slate-400 font-medium ml-auto">
+            宁缺毋滥 · 严选 <strong class="text-sky-600 dark:text-sky-400 font-bold font-mono">{reviewItems.length}</strong> 款核心机皇
+          </span>
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-2.5">
+          {category.name} · 2026 专属梯子节点严选推荐
+        </h1>
+
+        <p class="text-sm sm:text-base font-semibold text-sky-600 dark:text-sky-400 mb-6">
+          {category.tagline}
+        </p>
+
+        <!-- 核心 SEO 权威导读卡片 (150-200 字科普，提升长尾词权重) -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white mb-2">
+            <ShieldCheck class="w-4 h-4 text-sky-500" />
+            <span>技术背景与选型科普：</span>
+          </div>
+          <p>
+            {category.seoGuide}
+          </p>
+        </div>
+
+        <!-- 分类专属筛选准入指标 -->
+        <div class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+          <div class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            本榜单硬性准入筛选指标：
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            {category.criteria.map((c) => (
+              <div class="flex items-center gap-2 p-2.5 rounded-xl bg-white/60 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 text-xs text-slate-700 dark:text-slate-300 font-medium">
+                <CheckCircle2 class="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                <span>{c}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      <!-- 模块二：专属严选评测卡片列表 (仅展示 3-4 款，打破主页固定排序) -->
+      <section class="space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-200/80 dark:border-slate-800/60 pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 mb-2">
+              <Sparkles class="w-3.5 h-3.5" />
+              <span>专项深度评测推荐榜</span>
+            </div>
+            <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              {category.name} · 核心入围品牌 ({reviewItems.length})
+            </h2>
+          </div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs text-slate-600 dark:text-slate-300 font-medium border border-slate-200/60 dark:border-slate-700/60">
+            <BarChart3 class="w-3.5 h-3.5 text-sky-500" />
+            <span>排序维度：</span>
+            <span class="font-bold text-sky-600 dark:text-sky-400">{category.sortDimension}</span>
+          </div>
+        </div>
+
+        <!-- 专属评测卡片双列网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {reviewItems.map((item) => {
+            const review = item.review;
+            return (
+              <article class="glass-card rounded-2xl border border-slate-200 dark:border-slate-800 p-5 hover:shadow-lg hover:border-sky-400 dark:hover:border-sky-600 transition-all duration-200 hover:-translate-y-0.5 group flex flex-col justify-between">
+                <div>
+                  <!-- 卡片顶部：分类专属名次 #1~#4 + 分类专属亮点角标 + 核心测试数据 -->
+                  <div class="flex items-center justify-between gap-2 mb-3">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class={`inline-flex items-center justify-center px-2.5 py-1 rounded-lg text-xs font-black font-mono shadow-sm ${
+                        item.categoryRank === 1
+                          ? 'bg-amber-500 text-white shadow-amber-500/30'
+                          : item.categoryRank === 2
+                          ? 'bg-slate-400 text-white'
+                          : item.categoryRank === 3
+                          ? 'bg-amber-700/90 text-white'
+                          : 'bg-indigo-600 text-white'
+                      }`}>
+                        TOP #{item.categoryRank}
+                      </span>
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                        {item.categoryBadge}
+                      </span>
+                    </div>
+
+                    <div class="text-right">
+                      <div class="text-[10px] text-slate-400 font-medium">{item.highlightMetric.label}</div>
+                      <div class="text-sm font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">
+                        {item.highlightMetric.value}
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 标题与链接 -->
+                  <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors mb-2 leading-snug">
+                    <a href={`/reviews/${review.id}/`}>{review.data.title}</a>
+                  </h3>
+
+                  <!-- 描述 -->
+                  <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed mb-4">
+                    {review.data.description}
+                  </p>
+                </div>
+
+                <div>
+                  <!-- 核心参数底栏 -->
+                  <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pb-3 mb-3 border-b border-slate-100 dark:border-slate-800">
+                    <span class="flex items-center gap-1 text-[11px]">
+                      <CalendarDays class="w-3.5 h-3.5" />
+                      <time datetime={new Date(review.data.pubDate).toISOString()}>
+                        {new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(review.data.pubDate))}
+                      </time>
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <span class="text-slate-400 text-[11px]">综合评分:</span>
+                      <span class="text-emerald-600 dark:text-emerald-400 font-bold font-mono">
+                        {Number(review.data.rating.overall).toFixed(1)}
+                      </span>
+                      <span class="text-slate-400 text-[11px]">/ 10</span>
+                    </span>
+                  </div>
+
+                  <!-- 标签与阅读链接 -->
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="flex flex-wrap gap-1">
+                      {review.data.streamingUnlock.slice(0, 3).map((s: string) => (
+                        <span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                      <a
+                        href={review.data.affiliateUrl}
+                        target="_blank"
+                        rel="nofollow sponsored noopener noreferrer"
+                        class="px-2.5 py-1 rounded-lg text-xs font-semibold text-white bg-sky-500 hover:bg-sky-600 transition-colors inline-flex items-center gap-1"
+                      >
+                        <span>官网直达</span>
+                        <ExternalLink class="w-3 h-3" />
+                      </a>
+                      <a
+                        href={`/reviews/${review.id}/`}
+                        class="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-0.5"
+                      >
+                        <span>阅读评测</span>
+                        <ChevronRight class="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <!-- 模块三：分类专属选型与技术问答 (FAQ) - 深度保障 SEO 独立原创度 -->
+      <section class="glass-card rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-4">
+        <div class="flex items-center gap-2 mb-2">
+          <HelpCircle class="w-5 h-5 text-sky-500" />
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">
+            {category.name} · 选购与避坑常见问题
+          </h3>
+        </div>
+
+        <div class="space-y-3">
+          {category.faqs.map((faq) => (
+            <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800 space-y-1.5">
+              <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-start gap-2">
+                <span class="text-sky-500 font-bold">Q:</span>
+                <span>{faq.question}</span>
+              </h4>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed pl-5">
+                {faq.answer}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 模块四：探索其他 5 个专属分类导航 -->
+      <footer class="pt-8 border-t border-slate-200/80 dark:border-slate-800/60">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">
+            探索其他 5 个按需选型分类
+          </h3>
+          <a href="/category" class="text-xs text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-0.5">
+            <span>查看分类导航总览</span>
+            <ChevronRight class="w-3.5 h-3.5" />
+          </a>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          {otherCategories.map((c) => (
+            <a
+              href={`/category/${c.id}/`}
+              class="flex flex-col items-center gap-1.5 p-3.5 rounded-2xl glass-card border border-slate-200 dark:border-slate-800 hover:border-sky-400 hover:shadow-sm transition-all hover:-translate-y-0.5 text-center group"
+            >
+              <span class="text-2xl group-hover:scale-110 transition-transform">{c.emoji}</span>
+              <div class="text-xs font-bold text-slate-900 dark:text-white">{c.name}</div>
+              <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate max-w-full">{c.desc}</div>
+            </a>
+          ))}
+        </div>
+      </footer>
+
+    </div>
+  </section>
+</Layout>

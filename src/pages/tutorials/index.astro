@@ -1,0 +1,211 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import TopAirportsWidget from '../../components/TopAirportsWidget.astro';
+import { getCollection } from 'astro:content';
+import { 
+  BookOpen, 
+  CalendarDays, 
+  Clock, 
+  ChevronRight, 
+  ArrowLeft, 
+  Sparkles, 
+  Tag, 
+  Compass, 
+  Layers, 
+  Laptop, 
+  Tv, 
+  Cpu 
+} from 'lucide-astro';
+
+const allTutorials = await getCollection('tutorials');
+const sortedTutorials = allTutorials.sort(
+  (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+
+const categories = [
+  { name: '全部文章', slug: 'all', icon: Compass },
+  { name: '客户端教程', slug: 'client', icon: Laptop },
+  { name: '流媒体解锁', slug: 'streaming', icon: Tv },
+  { name: '技术科普', slug: 'tech', icon: Cpu },
+];
+---
+
+<Layout
+  title="新手教程与科学上网指南 · 客户端配置/流媒体解锁/技术科普 - 节点实验室"
+  description="NodeLab 节点实验室发布专业科学上网教程。涵盖 Clash Verge Rev、Sing-box 订阅导入配置、TUN 模式外服游戏加速、Netflix/Disney+ 4K 全区解锁避坑指南及 IPLC 专线技术科普。"
+  type="website"
+>
+  <main class="relative py-10 md:py-14 lg:py-16">
+    <!-- 背景光晕装饰 -->
+    <div aria-hidden="true" class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-sky-500/10 dark:bg-sky-500/8 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/4 right-0 w-80 h-80 bg-indigo-500/8 dark:bg-indigo-600/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- 面包屑导航 -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6">
+        <a href="/" class="hover:text-sky-600 dark:hover:text-sky-400 flex items-center gap-1">
+          <ArrowLeft class="w-3.5 h-3.5" />
+          <span>首页</span>
+        </a>
+        <ChevronRight class="w-3 h-3 text-slate-400" />
+        <span class="text-slate-900 dark:text-white font-medium">新手教程</span>
+      </nav>
+
+      <!-- 左右分栏结构：主内容 + 侧边栏转化组件 -->
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_340px] xl:grid-cols-[1fr_360px] gap-8 xl:gap-12 items-start">
+        
+        <!-- 左侧主内容区域 -->
+        <div id="main-container" class="space-y-8">
+          
+          <!-- 头部 Hero -->
+          <header class="space-y-4">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+              <BookOpen class="w-3.5 h-3.5" />
+              <span>全链路操作指南 · 告别网络阻碍</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+              新手教程与实用指南
+            </h1>
+            <p class="text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+              精心整理的客户端快速上手图文、4K/8K 海外流媒体解锁攻略与底层网络原理解析。无论您是初次翻墙的新人，还是追求极致稳定低延迟的进阶玩家，都能在此找到专业解答。
+            </p>
+          </header>
+
+          <!-- 分类筛选标签栏 -->
+          <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-slate-200/80 dark:border-slate-800/60" id="category-tabs">
+            {categories.map((cat, idx) => (
+              <button
+                type="button"
+                data-category={cat.name}
+                class={`category-tab px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                  idx === 0
+                    ? 'bg-sky-500 text-white shadow-md shadow-sky-500/25 active-tab'
+                    : 'bg-white dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-sky-400 hover:text-sky-600'
+                }`}
+              >
+                <cat.icon class="w-3.5 h-3.5" />
+                <span>{cat.name}</span>
+              </button>
+            ))}
+          </div>
+
+          <!-- 文章列表卡片流 -->
+          <div class="space-y-5" id="tutorials-list">
+            {sortedTutorials.map((tut) => {
+              const data = tut.data;
+              return (
+                <article
+                  data-cat={data.category}
+                  class="tutorial-card glass-card rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-7 hover:border-sky-400 dark:hover:border-sky-600 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 group flex flex-col justify-between"
+                >
+                  <div class="space-y-3">
+                    <!-- 卡片顶部分类角标与阅读耗时 -->
+                    <div class="flex items-center justify-between text-xs">
+                      <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+                          {data.category}
+                        </span>
+                        {data.featured && (
+                          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                            精选必读
+                          </span>
+                        )}
+                      </div>
+                      <span class="flex items-center gap-1 text-[11px] text-slate-400 font-medium">
+                        <Clock class="w-3 h-3" />
+                        <span>{data.readTime}</span>
+                      </span>
+                    </div>
+
+                    <!-- 标题 -->
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors leading-snug">
+                      <a href={`/tutorials/${tut.id}/`}>{data.title}</a>
+                    </h2>
+
+                    <!-- 摘要 -->
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-2">
+                      {data.description}
+                    </p>
+                  </div>
+
+                  <!-- 卡片底栏信息 -->
+                  <div class="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
+                    <div class="flex items-center gap-3">
+                      <span class="flex items-center gap-1 text-[11px]">
+                        <CalendarDays class="w-3.5 h-3.5" />
+                        <time datetime={new Date(data.pubDate).toISOString()}>
+                          {new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(data.pubDate))}
+                        </time>
+                      </span>
+                      <span>·</span>
+                      <span class="text-[11px]">{data.author}</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 flex-wrap">
+                      {data.tags.slice(0, 3).map((tag: string) => (
+                        <span class="px-2 py-0.5 rounded text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                          #{tag}
+                        </span>
+                      ))}
+                      <a
+                        href={`/tutorials/${tut.id}/`}
+                        class="font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center gap-0.5 ml-2"
+                      >
+                        <span>阅读全文</span>
+                        <ChevronRight class="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  </div>
+
+                </article>
+              );
+            })}
+          </div>
+
+        </div>
+
+        <!-- 右侧侧边栏：嵌入“推荐机场榜单 TOP 3”内链高转化小组件 + 侧边栏 -->
+        <aside class="space-y-6 lg:sticky lg:top-24">
+          <!-- 流量转化核心组件：推荐机场榜单 TOP 3 -->
+          <TopAirportsWidget />
+
+          <!-- 原生公共侧边栏辅助信息 -->
+          <Sidebar />
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- 客户端分类即时过滤交互脚本 -->
+  <script is:inline>
+    const tabs = document.querySelectorAll('.category-tab');
+    const cards = document.querySelectorAll('.tutorial-card');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('bg-sky-500', 'text-white', 'shadow-md', 'shadow-sky-500/25', 'active-tab');
+          t.classList.add('bg-white', 'dark:bg-slate-800/80', 'text-slate-600', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-slate-700');
+        });
+
+        tab.classList.remove('bg-white', 'dark:bg-slate-800/80', 'text-slate-600', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-slate-700');
+        tab.classList.add('bg-sky-500', 'text-white', 'shadow-md', 'shadow-sky-500/25', 'active-tab');
+
+        const selectedCat = tab.getAttribute('data-category');
+
+        cards.forEach(card => {
+          if (selectedCat === '全部文章' || card.getAttribute('data-cat') === selectedCat) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</Layout>

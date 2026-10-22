@@ -1,0 +1,267 @@
+---
+import { 
+  Trophy, 
+  Tag, 
+  Bell, 
+  ExternalLink, 
+  Zap, 
+  CheckCircle2, 
+  Percent, 
+  Flame, 
+  Sparkles, 
+  ArrowRight 
+} from 'lucide-astro';
+
+// 热门榜单数据（可由父组件传入或在此维护默认顶级榜单）
+export interface Props {
+  activeTag?: string;
+}
+
+const { activeTag } = Astro.props;
+
+const topAirports = [
+  {
+    rank: 1,
+    name: '云界线',
+    badge: '综合评测机皇',
+    lineType: '全 IEPL 内网专线',
+    speed: '920 Mbps',
+    rating: 9.8,
+    price: '¥5.6/月起',
+    coupon: 'yjx888',
+    discount: '专属优惠码',
+    url: '/reviews/yunjiexian-review',
+    directUrl: 'https://9625mofan01.yunjiexianaff.com/#/?code=OOYhSj0L',
+    highlight: 'border-amber-500/50 dark:border-amber-500/40 bg-amber-500/5',
+  },
+  {
+    rank: 2,
+    name: '大佬云',
+    badge: '平价专线黑马',
+    lineType: '全 IEPL 内网专线',
+    speed: '880 Mbps',
+    rating: 9.6,
+    price: '¥5.6/月起',
+    coupon: 'dly888',
+    discount: '专属优惠码',
+    url: '/reviews/dalaoyun-review',
+    directUrl: 'https://mofanvip01.dalaoyunaff.com/#/?code=QT2rqp5V',
+    highlight: 'border-slate-400/40 dark:border-slate-400/30 bg-slate-400/5',
+  },
+  {
+    rank: 3,
+    name: '环球梯',
+    badge: '超低延迟畅联',
+    lineType: '全 IEPL 内网专线',
+    speed: '850 Mbps',
+    rating: 9.5,
+    price: '¥5.6/月起',
+    coupon: 'HQ66',
+    discount: '专属优惠码',
+    url: '/reviews/huanqiuti-review',
+    directUrl: 'https://mofanvip01.huanqiutiaff.com/#/?code=l7oLmjVU',
+    highlight: 'border-amber-700/30',
+  },
+  {
+    rank: 4,
+    name: '榴莲云',
+    badge: '高性价比爆款',
+    lineType: '全 IEPL 内网专线',
+    speed: '780 Mbps',
+    rating: 9.4,
+    price: '¥5.6/月起',
+    coupon: 'll88',
+    discount: '专属优惠码',
+    url: '/reviews/liulianyun-review',
+    directUrl: 'https://mofan88.liulianyunaff.com/#/?code=ETsQBSuR',
+    highlight: 'border-slate-500/20',
+  },
+  {
+    rank: 5,
+    name: '闪电鼠',
+    badge: '闪电极速首选',
+    lineType: '全 IEPL 内网专线',
+    speed: '820 Mbps',
+    rating: 9.3,
+    price: '¥5.6/月起',
+    coupon: 'sds888',
+    discount: '专属优惠码',
+    url: '/reviews/shandianshu-review',
+    directUrl: 'https://mofanvip01.shandianshuaff.com/#/?code=a3GAQAXg',
+    highlight: 'border-slate-500/20',
+  },
+];
+
+const categoryTags = [
+  { name: 'IPLC 纯专线', count: 18, color: 'text-sky-500 bg-sky-500/10 border-sky-500/20', href: '/category/iplc/' },
+  { name: 'IEPL 内网专线', count: 12, color: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/20', href: '/category/iplc/' },
+  { name: '4K/8K 流媒体解锁', count: 24, color: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20', href: '/category/streaming/' },
+  { name: 'ChatGPT / Claude 专线', count: 21, color: 'text-amber-500 bg-amber-500/10 border-amber-500/20', href: '/category/ai/' },
+  { name: '低延迟电竞节点', count: 9, color: 'text-purple-500 bg-purple-500/10 border-purple-500/20', href: '/category/gaming/' },
+  { name: '按量付费不限时', count: 14, color: 'text-rose-500 bg-rose-500/10 border-rose-500/20', href: '/category/budget/' },
+  { name: 'BGP 多线高防', count: 16, color: 'text-teal-500 bg-teal-500/10 border-teal-500/20', href: '/category/iplc/' },
+  { name: '跨境电商 / 原生住宅 IP', count: 7, color: 'text-cyan-500 bg-cyan-500/10 border-cyan-500/20', href: '/category/enterprise/' },
+];
+
+const announcements = [
+  {
+    date: '10-20',
+    tag: '测速',
+    title: '晚高峰 20:30~22:30 广港/沪日 IPLC 专线平均延迟 28ms，无丢包。',
+  },
+  {
+    date: '10-19',
+    tag: '活动',
+    title: '部分顶级机场开启万圣节早鸟特惠，季付及以上最高 75 折。',
+  },
+  {
+    date: '10-18',
+    tag: '协议',
+    title: '推荐升级至 Clash Verge Rev 1.7+ 或 Sing-box 1.10+ 以启用 Hysteria 2 混淆。',
+  },
+];
+---
+
+<aside class="space-y-6" aria-label="侧边栏快捷导航与热门榜单">
+  
+  <!-- 模块一：热门机场快速风云榜 (Top Recommendations) -->
+  <div class="glass-card rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-2">
+        <div class="p-1.5 rounded-lg bg-amber-500/10 text-amber-500">
+          <Trophy class="w-4 h-4" />
+        </div>
+        <h3 class="font-bold text-sm text-slate-900 dark:text-white">TOP 热门机场榜</h3>
+      </div>
+      <span class="text-[11px] text-slate-400 font-mono">2026 综合评定</span>
+    </div>
+
+    <div class="space-y-3">
+      {topAirports.map((item) => (
+        <div class={`p-3 rounded-xl border transition-all duration-200 hover:-translate-y-0.5 ${item.highlight} bg-white dark:bg-slate-900/60`}>
+          <div class="flex items-start justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
+                item.rank === 1 
+                  ? 'bg-amber-500 text-white shadow-sm shadow-amber-500/30' 
+                  : item.rank === 2 
+                  ? 'bg-slate-400 text-white shadow-sm' 
+                  : item.rank === 3
+                  ? 'bg-amber-700/80 text-white'
+                  : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+              }`}>
+                {item.rank}
+              </span>
+              <div>
+                <a href={item.url} class="font-bold text-sm text-slate-900 dark:text-white hover:text-sky-500 transition-colors">
+                  {item.name}
+                </a>
+                <span class="inline-block ml-1.5 px-1.5 py-0.5 rounded text-[10px] bg-sky-500/10 text-sky-600 dark:text-sky-400 font-medium">
+                  {item.badge}
+                </span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">{item.rating}分</span>
+            </div>
+          </div>
+
+          <div class="mt-2 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <span class="flex items-center gap-1">
+              <Zap class="w-3 h-3 text-sky-500" />
+              <span>{item.lineType}</span>
+            </span>
+            <span class="font-semibold text-slate-700 dark:text-slate-300">{item.price}</span>
+          </div>
+
+          <!-- 优惠码与跳转按钮 -->
+          <div class="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+            <span class="inline-flex items-center gap-1 text-[11px] text-amber-600 dark:text-amber-400 font-mono bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.5 rounded">
+              <Percent class="w-2.5 h-2.5" />
+              <span>券: {item.coupon}</span>
+            </span>
+            <a
+              href={item.directUrl}
+              target="_blank"
+              rel="nofollow sponsored noopener noreferrer"
+              class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-white bg-sky-500 hover:bg-sky-600 rounded-md transition-colors"
+            >
+              <span>直达</span>
+              <ExternalLink class="w-3 h-3" />
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-center">
+      <a href="/comparison-matrix" class="inline-flex items-center gap-1 text-xs text-sky-600 dark:text-sky-400 hover:underline font-medium">
+        <span>查看完整 20+ 款机场矩阵对比</span>
+        <ArrowRight class="w-3.5 h-3.5" />
+      </a>
+    </div>
+  </div>
+
+  <!-- 模块二：特性分类标签云 (Tags Cloud) -->
+  <div class="glass-card rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+    <div class="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+      <div class="p-1.5 rounded-lg bg-sky-500/10 text-sky-500">
+        <Tag class="w-4 h-4" />
+      </div>
+      <h3 class="font-bold text-sm text-slate-900 dark:text-white">按特性与需求筛选</h3>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      {categoryTags.map((t) => (
+        <a
+          href={t.href || `/?tag=${encodeURIComponent(t.name)}`}
+          class={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all duration-150 hover:scale-105 ${t.color}`}
+        >
+          <span>{t.name}</span>
+          <span class="ml-1 opacity-60 text-[10px]">({t.count})</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- 模块三：实时监控与快捷快讯播报 (Live Bulletin) -->
+  <div class="glass-card rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-2">
+        <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-500">
+          <Bell class="w-4 h-4" />
+        </div>
+        <h3 class="font-bold text-sm text-slate-900 dark:text-white">节点监控与测速播报</h3>
+      </div>
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+    </div>
+
+    <div class="space-y-3">
+      {announcements.map((a) => (
+        <div class="text-xs space-y-1">
+          <div class="flex items-center gap-1.5">
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              {a.tag}
+            </span>
+            <span class="text-[10px] text-slate-400 font-mono">{a.date}</span>
+          </div>
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-[11px]">
+            {a.title}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 模块四：防走丢与订阅提醒 -->
+  <div class="p-4 rounded-2xl border border-sky-500/30 bg-gradient-to-br from-sky-500/10 to-indigo-500/10 space-y-2">
+    <div class="flex items-center gap-2">
+      <Sparkles class="w-4 h-4 text-sky-500" />
+      <h4 class="text-xs font-bold text-slate-900 dark:text-white">收藏防失联建议</h4>
+    </div>
+    <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
+      建议按 <kbd class="px-1 py-0.5 bg-white dark:bg-slate-800 border rounded text-[10px]">Ctrl + D</kbd> 将本站加入书签，或订阅本站 RSS 源，以获取及时的晚高峰节点维护更新与独家优惠券。
+    </p>
+  </div>
+
+</aside>

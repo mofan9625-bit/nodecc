@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="radarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="#090d16" />
+  <circle cx="16" cy="16" r="11" stroke="url(#radarGrad)" stroke-width="2" stroke-dasharray="3 2" opacity="0.6" />
+  <circle cx="16" cy="16" r="6" stroke="#38bdf8" stroke-width="1.5" opacity="0.8" />
+  <circle cx="16" cy="16" r="2.5" fill="#38bdf8" />
+  <path d="M16 16 L24 8" stroke="url(#radarGrad)" stroke-width="2" stroke-linecap="round" />
+</svg>

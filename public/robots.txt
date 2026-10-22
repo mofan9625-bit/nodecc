@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+# Googlebot 抓取优化
+User-agent: Googlebot
+Allow: /
+
+# Bingbot 专项友好抓取配置
+User-agent: bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: msnbot
+Allow: /
+
+# 国内与全球主流爬虫优化
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YisouSpider
+Allow: /
+
+# 禁止抓取搜索交互参数及动态查询
+Disallow: /*?*q=*
+Disallow: /*?*search=*
+
+# 标准站点地图索引地址
+Sitemap: https://nodebench.cc/sitemap-index.xml

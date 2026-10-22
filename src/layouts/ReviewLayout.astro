@@ -1,0 +1,323 @@
+---
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Sidebar from '../components/Sidebar.astro';
+import '../styles/global.css';
+import { ChevronRight, Calendar, RefreshCw, Clock, User, Star, ExternalLink, Check, X, ShieldCheck } from 'lucide-astro';
+
+export interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    pubDate: Date;
+    updatedDate?: Date;
+    author?: string;
+    badge?: string;
+    featured?: boolean;
+    lineType?: string;
+    speedPeakMbps?: number;
+    rating: {
+      overall: number;
+      speed: number;
+      stability: number;
+      streaming: number;
+      support: number;
+    };
+    pricing: {
+      minMonthly: number;
+      currency: string;
+      period: string;
+    };
+    protocols?: string[];
+    features?: string[];
+    streamingUnlock?: string[];
+    serverLocations?: string[];
+    affiliateUrl: string;
+    couponCode?: string;
+    discountText?: string;
+    pros?: string[];
+    cons?: string[];
+    productName?: string;
+    image?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  author = '节点实验室',
+  badge,
+  rank,
+  rating,
+  pricing,
+  protocols = [],
+  features = [],
+  streamingUnlock = [],
+  serverLocations = [],
+  affiliateUrl,
+  couponCode,
+  discountText,
+  pros = [],
+  cons = [],
+  productName,
+  image,
+} = frontmatter;
+
+const ratingDimensions = [
+  { label: '综合评分', value: rating.overall, color: 'bg-sky-500' },
+  { label: '速度表现', value: rating.speed, color: 'bg-emerald-500' },
+  { label: '稳定性', value: rating.stability, color: 'bg-amber-500' },
+  { label: '流媒体解锁', value: rating.streaming, color: 'bg-violet-500' },
+  { label: '客服响应', value: rating.support, color: 'bg-rose-500' },
+];
+
+const formattedPubDate = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric', month: 'long', day: 'numeric',
+}).format(new Date(pubDate));
+
+const formattedUpdatedDate = updatedDate
+  ? new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(updatedDate))
+  : null;
+---
+
+<!doctype html>
+<html lang="zh-CN" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="节点实验室 RSS" href="/rss.xml" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <meta http-equiv="content-language" content="zh-CN" />
+
+  <SEO
+    title={title}
+    description={description}
+    image={image}
+    articleDate={new Date(pubDate)}
+    updatedDate={updatedDate ? new Date(updatedDate) : undefined}
+    type="review"
+    rating={rating}
+    productName={productName || title}
+    price={{ minMonthly: pricing.minMonthly, currency: pricing.currency }}
+  />
+</head>
+
+<body class="font-sans antialiased bg-[--bg-page] text-[--text-primary] transition-colors duration-200 grid-pattern min-h-screen flex flex-col">
+  <script is:inline>
+    (() => {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'light' || (!stored && !prefersDark)) {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
+  <Header />
+
+  <main id="main-content" class="flex-1">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+      
+      <!-- 面包屑导航（语义化，利于 Bing 抓取路径） -->
+      <nav aria-label="面包屑" class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 mb-6">
+        <a href="/" class="hover:text-sky-500 transition-colors">首页</a>
+        <ChevronRight class="w-3.5 h-3.5" />
+        <a href="/reviews" class="hover:text-sky-500 transition-colors">机场评测</a>
+        <ChevronRight class="w-3.5 h-3.5" />
+        <span class="text-slate-700 dark:text-slate-300 font-medium truncate max-w-[200px]">{title}</span>
+      </nav>
+
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 xl:gap-12">
+        
+        <!-- 主内容区 -->
+        <article class="min-w-0" itemscope itemtype="https://schema.org/Review">
+          
+          <!-- 评测顶部英雄卡片 -->
+          <header class="mb-8 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 glass-card shadow-sm glow-brand">
+            
+            <div class="flex items-center gap-2 mb-4 flex-wrap">
+              {rank && (
+                <span class={`inline-flex items-center justify-center px-2.5 py-0.5 rounded-lg text-xs font-black font-mono ${
+                  rank === 1
+                    ? 'bg-amber-500 text-white shadow-sm shadow-amber-500/40'
+                    : rank === 2
+                    ? 'bg-slate-400 text-white shadow-sm'
+                    : rank === 3
+                    ? 'bg-amber-700/80 text-white shadow-sm'
+                    : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                }`}>
+                  TOP #{rank}
+                </span>
+              )}
+              {badge && (
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+                  <Star class="w-3.5 h-3.5 fill-current" />
+                  <span>{badge}</span>
+                </div>
+              )}
+            </div>
+
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white leading-tight mb-3" itemprop="name">
+              {title}
+            </h1>
+
+            <p class="text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-5" itemprop="description">
+              {description}
+            </p>
+
+            <!-- 元数据行 -->
+            <div class="flex flex-wrap items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-5 pb-5 border-b border-slate-100 dark:border-slate-800">
+              <span class="flex items-center gap-1.5">
+                <User class="w-3.5 h-3.5" />
+                <span itemprop="author" itemscope itemtype="https://schema.org/Organization">
+                  <span itemprop="name">{author}</span>
+                </span>
+              </span>
+              <span class="flex items-center gap-1.5">
+                <Calendar class="w-3.5 h-3.5" />
+                <time itemprop="datePublished" datetime={new Date(pubDate).toISOString()}>
+                  {formattedPubDate}
+                </time>
+              </span>
+              {formattedUpdatedDate && (
+                <span class="flex items-center gap-1.5">
+                  <RefreshCw class="w-3.5 h-3.5" />
+                  <time itemprop="dateModified" datetime={new Date(updatedDate!).toISOString()}>
+                    实测更新: {formattedUpdatedDate}
+                  </time>
+                </span>
+              )}
+            </div>
+
+            <!-- 评分仪表板（5维雷达分） -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
+              {ratingDimensions.map((dim) => (
+                <div class="text-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/50">
+                  <div class="text-2xl font-black" style={`color: ${dim.color.includes('sky') ? '#0ea5e9' : dim.color.includes('emerald') ? '#10b981' : dim.color.includes('amber') ? '#f59e0b' : dim.color.includes('violet') ? '#8b5cf6' : '#f43f5e'}`}>
+                    {dim.value.toFixed(1)}
+                  </div>
+                  <div class="w-full bg-slate-200 dark:bg-slate-700 h-1 rounded-full overflow-hidden mt-1.5 mb-1">
+                    <div class={`${dim.color} h-full rounded-full`} style={`width: ${dim.value * 10}%`}></div>
+                  </div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">{dim.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <!-- CTA 直达按钮区 -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <a
+                href={affiliateUrl}
+                target="_blank"
+                rel="nofollow sponsored noopener noreferrer"
+                class="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40 transition-all hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <ExternalLink class="w-4 h-4" />
+                <span>立即访问官网 · 领取专属优惠</span>
+              </a>
+              {couponCode && (
+                <button
+                  id="copy-coupon-btn"
+                  type="button"
+                  data-code={couponCode}
+                  class="px-5 py-3 rounded-xl text-sm font-semibold border-2 border-dashed border-amber-500/60 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/30 transition-colors"
+                >
+                  🎁 优惠码: {couponCode} {discountText ? `(${discountText})` : ''} · 点击复制
+                </button>
+              )}
+            </div>
+          </header>
+
+          <!-- MDX 内容区（机器可读的语义化评测文章主体） -->
+          <div class="prose-custom" itemprop="reviewBody">
+            <slot />
+          </div>
+
+          <!-- 优缺点总结卡片 -->
+          {(pros.length > 0 || cons.length > 0) && (
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {pros.length > 0 && (
+                <div class="p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60">
+                  <h3 class="font-bold text-emerald-700 dark:text-emerald-400 mb-3 text-sm flex items-center gap-2">
+                    <Check class="w-4 h-4" />
+                    <span>核心优势 (Pros)</span>
+                  </h3>
+                  <ul class="space-y-2">
+                    {pros.map((pro) => (
+                      <li class="flex items-start gap-2 text-sm text-emerald-800 dark:text-emerald-300">
+                        <Check class="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+                        <span>{pro}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {cons.length > 0 && (
+                <div class="p-5 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/60">
+                  <h3 class="font-bold text-rose-700 dark:text-rose-400 mb-3 text-sm flex items-center gap-2">
+                    <X class="w-4 h-4" />
+                    <span>主要不足 (Cons)</span>
+                  </h3>
+                  <ul class="space-y-2">
+                    {cons.map((con) => (
+                      <li class="flex items-start gap-2 text-sm text-rose-800 dark:text-rose-300">
+                        <X class="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+                        <span>{con}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+
+          <!-- 免责声明尾注 -->
+          <div class="mt-8 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed flex items-start gap-2">
+            <ShieldCheck class="w-4 h-4 flex-shrink-0 mt-0.5 text-slate-400" />
+            <span>
+              本评测包含推广合作链接（Affiliate Link）。通过本站链接购买，您支付的价格不变，且我们将获得一定比例的佣金以支持测速服务器运营与内容持续产出。所有测评数据均基于真实网络环境独立实测，数据不受商业合作方影响，若发现问题欢迎通过
+              <a href="/contact" class="underline hover:text-sky-500">联系我们</a> 反馈。请遵守您所在国家和地区的法律法规，合法合规使用互联网服务。
+            </span>
+          </div>
+        </article>
+
+        <!-- 右侧侧边栏 -->
+        <aside class="lg:block">
+          <div class="sticky top-24">
+            <Sidebar />
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+    const btn = document.getElementById('copy-coupon-btn');
+    btn?.addEventListener('click', async () => {
+      const code = btn.getAttribute('data-code');
+      if (code) {
+        try {
+          await navigator.clipboard.writeText(code);
+          btn.textContent = '✅ 优惠码已复制! 去官网粘贴吧';
+          setTimeout(() => {
+            btn.textContent = `🎁 优惠码: ${code} · 点击复制`;
+          }, 3000);
+        } catch {
+          btn.textContent = `优惠码: ${code}（请手动复制）`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+---
+import { getCollection } from 'astro:content';
+import { Trophy, ExternalLink, ChevronRight, Zap, Flame, Sparkles, Percent } from 'lucide-astro';
+
+// 获取评分排名前 3 的旗舰品牌 (云界线、大佬云、环球梯)
+const allReviews = await getCollection('reviews');
+const top3Reviews = allReviews
+  .sort((a, b) => (a.data.rank ?? 99) - (b.data.rank ?? 99))
+  .slice(0, 3);
+---
+
+<div class="glass-card rounded-2xl p-5 border border-amber-500/30 bg-gradient-to-b from-amber-500/5 via-transparent to-transparent shadow-md space-y-4">
+  <!-- 标题区 -->
+  <div class="flex items-center justify-between pb-3 border-b border-amber-500/20">
+    <div class="flex items-center gap-2">
+      <div class="p-1.5 rounded-lg bg-amber-500 text-white shadow-sm shadow-amber-500/40">
+        <Trophy class="w-4 h-4" />
+      </div>
+      <div>
+        <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-1">
+          <span>推荐机场榜单 TOP 3</span>
+          <Flame class="w-3.5 h-3.5 text-rose-500" />
+        </h3>
+        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">晚高峰 1000M 专线实测首选</p>
+      </div>
+    </div>
+    <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 font-mono bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+      2026 严选
+    </span>
+  </div>
+
+  <!-- TOP 3 品牌列表卡片 -->
+  <div class="space-y-3">
+    {top3Reviews.map((rev, idx) => {
+      const data = rev.data;
+      const rankNum = idx + 1;
+      return (
+        <div class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 hover:border-sky-400 dark:hover:border-sky-600 transition-all duration-200 hover:shadow-sm space-y-2.5">
+          <!-- 头部：名次 + 名称 + 评分 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-black font-mono shadow-sm ${
+                rankNum === 1
+                  ? 'bg-amber-500 text-white shadow-amber-500/40'
+                  : rankNum === 2
+                  ? 'bg-slate-400 text-white'
+                  : 'bg-amber-700 text-white'
+              }`}>
+                {rankNum}
+              </span>
+              <a
+                href={`/reviews/${rev.id}/`}
+                class="font-bold text-sm text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
+              >
+                {data.title.split('：')[0].replace('机场深度评测', '')}
+              </a>
+              {data.badge && (
+                <span class="text-[9px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
+                  {rankNum === 1 ? '机皇' : rankNum === 2 ? '黑马' : '畅联'}
+                </span>
+              )}
+            </div>
+            <span class="text-xs font-black text-emerald-600 dark:text-emerald-400 font-mono">
+              {Number(data.rating.overall).toFixed(1)} 分
+            </span>
+          </div>
+
+          <!-- 核心实测指标与价格 -->
+          <div class="grid grid-cols-2 gap-2 text-[11px] py-1 px-2 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 font-mono">
+            <div>
+              <span class="text-slate-400 text-[10px]">实测下行:</span>
+              <strong class="text-slate-900 dark:text-white ml-1">{data.speedPeakMbps}M</strong>
+            </div>
+            <div>
+              <span class="text-slate-400 text-[10px]">起步资费:</span>
+              <strong class="text-emerald-600 dark:text-emerald-400 ml-1">¥{data.pricing.minMonthly}/月</strong>
+            </div>
+          </div>
+
+          <!-- 优惠券代码与行动按钮 -->
+          <div class="flex items-center justify-between pt-1">
+            {data.couponCode ? (
+              <span class="inline-flex items-center gap-1 text-[10px] text-amber-600 dark:text-amber-400 font-mono bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                <Percent class="w-2.5 h-2.5" />
+                <span>券: {data.couponCode}</span>
+              </span>
+            ) : (
+              <span class="text-[10px] text-slate-400">{data.lineType}</span>
+            )}
+
+            <div class="flex items-center gap-2">
+              <a
+                href={`/reviews/${rev.id}/`}
+                class="text-[11px] text-slate-500 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
+              >
+                评测
+              </a>
+              <a
+                href={data.affiliateUrl}
+                target="_blank"
+                rel="nofollow sponsored noopener noreferrer"
+                class="px-2.5 py-1 rounded-lg text-[11px] font-bold text-white bg-sky-500 hover:bg-sky-600 transition-colors inline-flex items-center gap-1 shadow-sm"
+              >
+                <span>直达官网</span>
+                <ExternalLink class="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+  <!-- 底部链接 -->
+  <div class="pt-2 text-center">
+    <a
+      href="/reviews"
+      class="inline-flex items-center gap-1 text-xs text-sky-600 dark:text-sky-400 hover:underline font-medium"
+    >
+      <span>查看全部 20+ 款机场评测列表</span>
+      <ChevronRight class="w-3.5 h-3.5" />
+    </a>
+  </div>
+</div>

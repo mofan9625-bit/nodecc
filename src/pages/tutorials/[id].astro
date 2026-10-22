@@ -1,0 +1,174 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TopAirportsWidget from '../../components/TopAirportsWidget.astro';
+import { getCollection, render } from 'astro:content';
+import { 
+  CalendarDays, 
+  Clock, 
+  ArrowLeft, 
+  ChevronRight, 
+  Tag, 
+  Share2, 
+  BookOpen, 
+  Sparkles,
+  ShieldCheck,
+  CheckCircle2
+} from 'lucide-astro';
+
+export async function getStaticPaths() {
+  const tutorials = await getCollection('tutorials');
+  return tutorials.map((tutorial) => ({
+    params: { id: tutorial.id },
+    props: { tutorial },
+  }));
+}
+
+const { tutorial } = Astro.props;
+const { Content } = await render(tutorial);
+
+// 获取其他推荐教程
+const allTutorials = await getCollection('tutorials');
+const relatedTutorials = allTutorials
+  .filter((t) => t.id !== tutorial.id)
+  .slice(0, 3);
+---
+
+<Layout
+  title={`${tutorial.data.title} · 新手教程 - 节点实验室`}
+  description={tutorial.data.description}
+  type="article"
+>
+  <main class="relative py-10 md:py-14 lg:py-16">
+    <!-- 背景光晕装饰 -->
+    <div aria-hidden="true" class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-sky-500/10 dark:bg-sky-500/8 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/4 right-0 w-80 h-80 bg-indigo-500/8 dark:bg-indigo-600/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- 面包屑导航 -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6 flex-wrap">
+        <a href="/" class="hover:text-sky-600 dark:hover:text-sky-400 flex items-center gap-1">
+          <ArrowLeft class="w-3.5 h-3.5" />
+          <span>首页</span>
+        </a>
+        <ChevronRight class="w-3 h-3 text-slate-400" />
+        <a href="/tutorials" class="hover:text-sky-600 dark:hover:text-sky-400">新手教程</a>
+        <ChevronRight class="w-3 h-3 text-slate-400" />
+        <span class="text-slate-900 dark:text-white font-medium truncate max-w-xs">{tutorial.data.title}</span>
+      </nav>
+
+      <!-- 文章双栏布局：左侧文章正文 + 右侧推荐机场 TOP 3 转化挂载栏 -->
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_340px] xl:grid-cols-[1fr_360px] gap-8 xl:gap-12 items-start">
+        
+        <!-- 文章正文区域 -->
+        <article class="glass-card rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-9 lg:p-11 shadow-sm space-y-8">
+          
+          <!-- 文章标题与元数据 -->
+          <header class="space-y-4 pb-6 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center gap-2 flex-wrap text-xs">
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+                {tutorial.data.category}
+              </span>
+              <span class="flex items-center gap-1 text-slate-400 font-medium">
+                <Clock class="w-3.5 h-3.5" />
+                <span>{tutorial.data.readTime}</span>
+              </span>
+              <span class="text-slate-300 dark:text-slate-700">·</span>
+              <span class="flex items-center gap-1 text-slate-400">
+                <CalendarDays class="w-3.5 h-3.5" />
+                <time datetime={new Date(tutorial.data.pubDate).toISOString()}>
+                  {new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(tutorial.data.pubDate))}
+                </time>
+              </span>
+              <span class="text-slate-300 dark:text-slate-700">·</span>
+              <span class="text-slate-400 font-medium">作者: {tutorial.data.author}</span>
+            </div>
+
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+              {tutorial.data.title}
+            </h1>
+
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-900/60 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800">
+              {tutorial.data.description}
+            </p>
+          </header>
+
+          <!-- 富文本 Markdown 正文渲染区 (支持 H2, 代码高亮, 表格, 列表) -->
+          <div class="prose-custom text-slate-700 dark:text-slate-200 leading-relaxed space-y-6">
+            <Content />
+          </div>
+
+          <!-- 文章标签与底部互动栏 -->
+          <footer class="pt-6 border-t border-slate-100 dark:border-slate-800 space-y-4">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-xs font-bold text-slate-400 flex items-center gap-1">
+                <Tag class="w-3.5 h-3.5" />
+                <span>相关标签:</span>
+              </span>
+              {tutorial.data.tags.map((tag: string) => (
+                <span class="px-2.5 py-1 rounded-lg text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+
+            <!-- 底部返回与版权声明 -->
+            <div class="p-4 rounded-2xl bg-sky-50/50 dark:bg-sky-950/20 border border-sky-500/20 text-xs text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <ShieldCheck class="w-4 h-4 text-sky-500 shrink-0" />
+                <span>本文由 <strong>节点实验室 (NodeLab)</strong> 原创发布，转载请保留原文出处。</span>
+              </div>
+              <a
+                href="/tutorials"
+                class="font-bold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1 whitespace-nowrap"
+              >
+                <span>返回教程列表</span>
+                <ChevronRight class="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </footer>
+
+          <!-- 移动端文章底部转化强化区：推荐机场榜单 TOP 3 -->
+          <div class="block lg:hidden pt-4">
+            <TopAirportsWidget />
+          </div>
+
+        </article>
+
+        <!-- 桌面端粘性侧边栏：内链挂载核心转化组件 -->
+        <aside class="space-y-6 lg:sticky lg:top-24">
+          <!-- 挂载组件：推荐机场榜单 TOP 3 (转化核心) -->
+          <TopAirportsWidget />
+
+          <!-- 相关推荐教程 -->
+          {relatedTutorials.length > 0 && (
+            <div class="glass-card rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+              <div class="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800 text-slate-900 dark:text-white font-bold text-sm">
+                <BookOpen class="w-4 h-4 text-sky-500" />
+                <span>更多实用教程</span>
+              </div>
+              <div class="space-y-3">
+                {relatedTutorials.map((t) => (
+                  <div class="text-xs space-y-1">
+                    <span class="text-[10px] text-sky-600 dark:text-sky-400 font-bold bg-sky-500/10 px-1.5 py-0.5 rounded">
+                      {t.data.category}
+                    </span>
+                    <a
+                      href={`/tutorials/${t.id}/`}
+                      class="block font-medium text-slate-700 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 line-clamp-2 leading-snug"
+                    >
+                      {t.data.title}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </aside>
+
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import { 
+  BarChart3, 
+  Layers, 
+  ShieldCheck, 
+  ArrowLeft, 
+  ChevronRight, 
+  Sparkles, 
+  Activity, 
+  HelpCircle,
+  Zap,
+  CheckCircle2
+} from 'lucide-astro';
+---
+
+<Layout
+  title="优质机场梯子全维度对比表格 · 2026 横评对比矩阵 - 节点实验室"
+  description="NodeLab 节点实验室发布 2026 全维度机场梯子横评对比矩阵。综合对比 9 大主流品牌的线路架构（IPLC/IEPL）、晚高峰实测带宽、4K/8K 流媒体解锁、ChatGPT 连通率、起步月付/年付价格及独家专属优惠码。"
+  type="website"
+>
+  <main class="relative py-10 md:py-14 lg:py-16">
+    <!-- 背景光晕装饰 -->
+    <div aria-hidden="true" class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-sky-500/10 dark:bg-sky-500/8 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/4 right-0 w-80 h-80 bg-indigo-500/8 dark:bg-indigo-600/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      
+      <!-- 面包屑导航 -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+        <a href="/" class="hover:text-sky-600 dark:hover:text-sky-400 flex items-center gap-1">
+          <ArrowLeft class="w-3.5 h-3.5" />
+          <span>首页</span>
+        </a>
+        <ChevronRight class="w-3 h-3 text-slate-400" />
+        <span class="text-slate-900 dark:text-white font-medium">全维度对比矩阵</span>
+      </nav>
+
+      <!-- 页面头部 Hero：矩阵概述与多维评价指标说明 -->
+      <header class="glass-card rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 lg:p-10 relative overflow-hidden shadow-sm">
+        <div class="flex items-center gap-2.5 mb-3 flex-wrap">
+          <div class="p-2 rounded-xl bg-sky-500/10 text-sky-500 dark:bg-sky-500/20">
+            <BarChart3 class="w-6 h-6" />
+          </div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+            <Sparkles class="w-3.5 h-3.5" />
+            <span>2026 全维度多指标横评矩阵 · 独立实测更新</span>
+          </span>
+          <span class="text-xs text-slate-500 dark:text-slate-400 font-medium ml-auto">
+            收录 <strong class="text-sky-600 dark:text-sky-400 font-bold font-mono">9</strong> 大核心品牌
+          </span>
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-3">
+          优质机场梯子全维度对比表格
+        </h1>
+
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl mb-6">
+          为了帮助您快速在众多翻墙服务商中找到最适合自身需求的一款，本站测速实验室对收录的各大主流机场开展了长期、连续且真实的多维度基准测试。以下横向表格汇总了各品牌的线路架构、晚高峰测速、流媒体解锁能力、月均价格及专属折扣代码。
+        </p>
+
+        <!-- 4 项矩阵关键维度指南 -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="p-3.5 rounded-xl bg-white/70 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
+            <div class="text-[11px] text-slate-500 dark:text-slate-400">专线类型覆盖</div>
+            <div class="text-sm sm:text-base font-extrabold text-sky-600 dark:text-sky-400 mt-0.5">IPLC / IEPL</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-white/70 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
+            <div class="text-[11px] text-slate-500 dark:text-slate-400">最低门槛价格</div>
+            <div class="text-sm sm:text-base font-extrabold text-emerald-600 dark:text-emerald-400 mt-0.5">¥5.60 /月起</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-white/70 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
+            <div class="text-[11px] text-slate-500 dark:text-slate-400">流媒体解锁状态</div>
+            <div class="text-sm sm:text-base font-extrabold text-indigo-600 dark:text-indigo-400 mt-0.5">4K/8K 全绿</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-white/70 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60">
+            <div class="text-[11px] text-slate-500 dark:text-slate-400">实测晚高峰极值</div>
+            <div class="text-sm sm:text-base font-extrabold text-rose-600 dark:text-rose-400 mt-0.5">950 Mbps</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 核心对比表格渲染区 -->
+      <section class="space-y-4">
+        <ComparisonTable />
+      </section>
+
+      <!-- 表格使用指南与技术说明 FAQ -->
+      <section class="glass-card rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-4">
+        <div class="flex items-center gap-2 mb-2">
+          <HelpCircle class="w-5 h-5 text-sky-500" />
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">
+            对比表格使用与选购避坑指南
+          </h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800 space-y-1.5">
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-start gap-2">
+              <span class="text-sky-500 font-bold">1.</span>
+              <span>如何利用上方表格的筛选标签？</span>
+            </h4>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              您可以通过表格上方的快速筛选按钮，一键过滤“全功能4K/8K解锁”、“性价比机皇”或“大流量/商业专线”等标签，快速聚焦满足您核心诉求的目标机场。
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800 space-y-1.5">
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-start gap-2">
+              <span class="text-sky-500 font-bold">2.</span>
+              <span>为什么综合评分中“晚高峰稳定性”权重最高？</span>
+            </h4>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              任何普通中继在白天出口空闲时均可实现良好下行，但在晚高峰 20:30~22:30 期间的零丢包抗压表现，才是衡量物理专线与 IDC 机房真实 SLA 服务水平的黄金试金石。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部跳转联动 -->
+      <footer class="pt-8 border-t border-slate-200/80 dark:border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-xs text-slate-500 dark:text-slate-400">
+          想查看详细的晚高峰实测日志与测速波形图表？请前往节点测速战报专栏。
+        </div>
+        <div class="flex items-center gap-3">
+          <a
+            href="/speedtest-reports"
+            class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 hover:bg-sky-600 text-white transition-colors inline-flex items-center gap-1.5"
+          >
+            <Activity class="w-3.5 h-3.5" />
+            <span>查看晚高峰节点测速监控战报</span>
+          </a>
+          <a
+            href="/category"
+            class="px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400 text-slate-700 dark:text-slate-200 transition-colors inline-flex items-center gap-1.5"
+          >
+            <Sparkles class="w-3.5 h-3.5" />
+            <span>按场景快速选型导航</span>
+          </a>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+</Layout>

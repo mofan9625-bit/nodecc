@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#31102b" />
+      <stop offset="100%" stop-color="#e11d48" />
+    </linearGradient>
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.12)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0.02)" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bgGrad2)" />
+  <circle cx="680" cy="90" r="150" fill="#e11d48" opacity="0.18" filter="blur(40px)" />
+  <circle cx="150" cy="360" r="160" fill="#a855f7" opacity="0.15" filter="blur(40px)" />
+
+  <!-- Center Card Illustration -->
+  <g transform="translate(180, 75)">
+    <rect width="440" height="300" rx="20" fill="url(#cardGrad2)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+    
+    <!-- Video Player Simulation -->
+    <rect x="25" y="25" width="390" height="190" rx="14" fill="#030712" stroke="rgba(255,255,255,0.1)" />
+    
+    <!-- Play button glow -->
+    <circle cx="220" cy="115" r="32" fill="rgba(225,29,72,0.3)" />
+    <polygon points="212,102 235,115 212,128" fill="#ffffff" />
+
+    <!-- Badges in player -->
+    <rect x="40" y="40" width="70" height="24" rx="6" fill="#e50914" />
+    <text x="75" y="56" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="900">NETFLIX</text>
+
+    <rect x="120" y="40" width="75" height="24" rx="6" fill="#113ccf" />
+    <text x="157" y="56" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="900">Disney+</text>
+
+    <rect x="330" y="40" width="70" height="24" rx="6" fill="rgba(255,255,255,0.2)" />
+    <text x="365" y="56" text-anchor="middle" fill="#facc15" font-family="sans-serif" font-size="10" font-weight="700">4K HDR</text>
+
+    <!-- Bottom verification status -->
+    <rect x="25" y="230" width="390" height="50" rx="10" fill="rgba(15,23,42,0.7)" stroke="rgba(52,211,153,0.3)" />
+    <circle cx="50" cy="255" r="10" fill="#10b981" />
+    <path d="M46,255 L49,258 L55,252" stroke="#ffffff" stroke-width="2" fill="none" />
+    <text x="70" y="259" fill="#f8fafc" font-family="sans-serif" font-size="12" font-weight="600">IP 纯净度检测通过：原生住宅 ISP / 欺诈评分 0</text>
+  </g>
+
+  <!-- Tag Pill -->
+  <rect x="50" y="45" width="110" height="30" rx="15" fill="rgba(225,29,72,0.25)" stroke="#fb7185" />
+  <text x="105" y="65" text-anchor="middle" fill="#fb7185" font-family="sans-serif" font-size="12" font-weight="bold">流媒体解锁</text>
+</svg>

@@ -1,0 +1,88 @@
+---
+import { FlaskConical, ShieldCheck, ExternalLink, Heart, Globe2 } from 'lucide-astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="mt-20 border-t border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#070a10] text-slate-600 dark:text-slate-400">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
+      
+      <!-- 品牌与定位 -->
+      <div class="space-y-4 md:col-span-1">
+        <div class="flex items-center gap-2">
+          <div class="h-8 w-8 rounded-lg bg-sky-500 flex items-center justify-center text-white">
+            <FlaskConical class="w-4 h-4" />
+          </div>
+          <span class="text-base font-bold text-slate-900 dark:text-white">NodeLab 节点实验室</span>
+        </div>
+        <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+          专注于全网优质机场评测与代理服务实测。每日针对晚高峰测速、流媒体解锁（Netflix/Disney+）、ChatGPT 连通率及防封锁抗干扰能力进行多维度深度基准评测。
+        </p>
+        <div class="flex items-center gap-2 text-xs text-emerald-600 dark:text-emerald-400">
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          <span>7x24h 自动化全球节点监测中</span>
+        </div>
+      </div>
+
+      <!-- 快捷导航 -->
+      <div>
+        <h4 class="text-sm font-semibold text-slate-900 dark:text-white mb-3">评测与榜单</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/reviews" class="hover:text-sky-500 transition-colors">最新机场综合评测</a></li>
+          <li><a href="/comparison-matrix" class="hover:text-sky-500 transition-colors">2026 机场梯子横评矩阵</a></li>
+          <li><a href="/speedtest-reports" class="hover:text-sky-500 transition-colors">晚高峰真实节点测速榜</a></li>
+          <li><a href="/category/iplc" class="hover:text-sky-500 transition-colors">IPLC / IEPL 纯内网专线推荐</a></li>
+          <li><a href="/category/budget" class="hover:text-sky-500 transition-colors">便宜高性价比与按量付费</a></li>
+        </ul>
+      </div>
+
+      <!-- 实用工具与客户端 -->
+      <div>
+        <h4 class="text-sm font-semibold text-slate-900 dark:text-white mb-3">工具与客户端</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/tools#clash" class="hover:text-sky-500 transition-colors">Clash Verge Rev 官方下载</a></li>
+          <li><a href="/tools#singbox" class="hover:text-sky-500 transition-colors">Sing-box 通用客户端与配置</a></li>
+          <li><a href="/tools#ios" class="hover:text-sky-500 transition-colors">Shadowrocket / Loon / Surge</a></li>
+          <li><a href="/tools#dns" class="hover:text-sky-500 transition-colors">DNS 污染与 WebRTC 泄漏检测</a></li>
+          <li><a href="/tools#ip" class="hover:text-sky-500 transition-colors">IP 纯净度与伪装度检测入口</a></li>
+        </ul>
+      </div>
+
+      <!-- 合规与免责声明 -->
+      <div class="space-y-3">
+        <h4 class="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
+          <ShieldCheck class="w-4 h-4 text-sky-500" />
+          <span>合规声明与原则</span>
+        </h4>
+        <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+          本站所有评测数据均基于真实网络环境客观抓取，仅供学术科研、跨境电商、海外开发及正当技术学习交流参考。请严格遵守所在国家及地区的法律法规，文明合规使用互联网。
+        </p>
+        <div class="pt-1">
+          <a href="/disclaimer" class="text-xs text-sky-600 dark:text-sky-400 underline underline-offset-4 hover:text-sky-500">
+            阅读完整法律免责声明 →
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 底部版权与 SEO 元标记 -->
+    <div class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+      <div class="flex items-center gap-2">
+        <span>© {currentYear} NodeLab (节点实验室). All rights reserved.</span>
+        <span>•</span>
+        <a href="/sitemap-index.xml" class="hover:underline">站点地图 (Sitemap)</a>
+        <span>•</span>
+        <a href="/rss.xml" class="hover:underline">RSS 订阅</a>
+      </div>
+      <div class="flex items-center gap-4 text-[11px]">
+        <span class="flex items-center gap-1">
+          <Globe2 class="w-3.5 h-3.5" />
+          <span>Bingbot & Edge 极速加速架构</span>
+        </span>
+        <span>Static Powered by Astro 5 & Tailwind</span>
+      </div>
+    </div>
+  </div>
+</footer>

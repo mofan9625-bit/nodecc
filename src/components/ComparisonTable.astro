@@ -1,0 +1,538 @@
+---
+import { 
+  Zap, 
+  ShieldCheck, 
+  Tv, 
+  Bot, 
+  ExternalLink, 
+  Check, 
+  Copy, 
+  Sparkles, 
+  ChevronRight, 
+  BarChart2, 
+  Filter 
+} from 'lucide-astro';
+
+export interface AirportItem {
+  id: string;
+  name: string;
+  badge: string;
+  lineType: string;
+  speed: string;
+  rating: {
+    overall: number;
+    speed: number;
+    stability: number;
+    streaming: number;
+    support: number;
+  };
+  streamingUnlock: string[];
+  protocols: string[];
+  price: string;
+  packageDetails: string;
+  established: string;
+  coupon?: string;
+  discount?: string;
+  affiliateUrl: string;
+  reviewUrl: string;
+  features: string[];
+}
+
+const airports: AirportItem[] = [
+  {
+    id: 'yunjiexian',
+    name: '云界线',
+    badge: '👑 2026 年度性价比机皇',
+    lineType: '全 IEPL 内网专线',
+    speed: '920 Mbps',
+    rating: {
+      overall: 9.8,
+      speed: 9.8,
+      stability: 9.9,
+      streaming: 9.8,
+      support: 9.6,
+    },
+    streamingUnlock: ['Netflix', 'Disney+', 'YouTube 8K', 'ChatGPT-4o', 'Claude 3.5'],
+    protocols: ['VLESS', 'Shadowsocks'],
+    price: '¥5.60',
+    packageDetails: '年付约5.6元/月 60GB',
+    established: '2024',
+    coupon: 'yjx888',
+    discount: '专属优惠码',
+    affiliateUrl: 'https://9625mofan01.yunjiexianaff.com/#/?code=OOYhSj0L',
+    reviewUrl: '/reviews/yunjiexian-review',
+    features: ['年付约5.6元/月 60GB', '全IEPL内网专线', '支持VLESS协议', '晚高峰 4K/8K 秒开'],
+  },
+  {
+    id: 'dalaoyun',
+    name: '大佬云',
+    badge: '⚡ 平价专线黑马',
+    lineType: '全 IEPL 内网专线',
+    speed: '880 Mbps',
+    rating: {
+      overall: 9.6,
+      speed: 9.6,
+      stability: 9.7,
+      streaming: 9.6,
+      support: 9.5,
+    },
+    streamingUnlock: ['Netflix', 'Disney+', 'YouTube 4K', 'ChatGPT-4o'],
+    protocols: ['VLESS', 'Shadowsocks'],
+    price: '¥5.60',
+    packageDetails: '年付约5.6元/月 60GB',
+    established: '2024',
+    coupon: 'dly888',
+    discount: '专属优惠码',
+    affiliateUrl: 'https://mofanvip01.dalaoyunaff.com/#/?code=QT2rqp5V',
+    reviewUrl: '/reviews/dalaoyun-review',
+    features: ['年付约5.6元/月 60GB', 'IEPL专线稳定不丢包', '支持VLESS协议', '全天候工单支持'],
+  },
+  {
+    id: 'huanqiuti',
+    name: '环球梯',
+    badge: '💰 超低延迟畅联',
+    lineType: '全 IEPL 内网专线',
+    speed: '850 Mbps',
+    rating: {
+      overall: 9.5,
+      speed: 9.5,
+      stability: 9.5,
+      streaming: 9.5,
+      support: 9.4,
+    },
+    streamingUnlock: ['Netflix', 'Disney+', 'ChatGPT', 'TikTok'],
+    protocols: ['VLESS', 'Shadowsocks'],
+    price: '¥5.60',
+    packageDetails: '年付约5.6元/月 60GB',
+    established: '2024',
+    coupon: 'HQ66',
+    discount: '专属优惠码',
+    affiliateUrl: 'https://mofanvip01.huanqiutiaff.com/#/?code=l7oLmjVU',
+    reviewUrl: '/reviews/huanqiuti-review',
+    features: ['年付约5.6元/月 60GB', 'IEPL专线高速中继', '支持VLESS协议', '兼容全平台客户端'],
+  },
+  {
+    id: 'liulianyun',
+    name: '榴莲云',
+    badge: '🔥 高性价比爆款',
+    lineType: '全 IEPL 内网专线',
+    speed: '780 Mbps',
+    rating: {
+      overall: 9.4,
+      speed: 9.4,
+      stability: 9.4,
+      streaming: 9.3,
+      support: 9.3,
+    },
+    streamingUnlock: ['Netflix', 'YouTube 4K', 'ChatGPT'],
+    protocols: ['IEPL专线', 'Shadowsocks'],
+    price: '¥5.60',
+    packageDetails: '年付约5.6元/月 60GB',
+    established: '2024',
+    coupon: 'll88',
+    discount: '专属优惠码',
+    affiliateUrl: 'https://mofan88.liulianyunaff.com/#/?code=ETsQBSuR',
+    reviewUrl: '/reviews/liulianyun-review',
+    features: ['年付约5.6元/月 60GB', 'IEPL专线保障', '超高性价比平价', '流媒体全解锁'],
+  },
+  {
+    id: 'shandianshu',
+    name: '闪电鼠',
+    badge: '🚀 闪电极速首选',
+    lineType: '全 IEPL 内网专线',
+    speed: '820 Mbps',
+    rating: {
+      overall: 9.3,
+      speed: 9.3,
+      stability: 9.3,
+      streaming: 9.3,
+      support: 9.2,
+    },
+    streamingUnlock: ['Netflix', 'YouTube 4K', 'ChatGPT', 'Disney+'],
+    protocols: ['VLESS', 'Shadowsocks'],
+    price: '¥5.60',
+    packageDetails: '年付约5.6元/月 60GB',
+    established: '2024',
+    coupon: 'sds888',
+    discount: '专属优惠码',
+    affiliateUrl: 'https://mofanvip01.shandianshuaff.com/#/?code=a3GAQAXg',
+    reviewUrl: '/reviews/shandianshu-review',
+    features: ['年付约5.6元/月 60GB', 'IEPL内网专线', '支持VLESS协议', '游戏与流媒体加速'],
+  },
+  {
+    id: 'shenxing',
+    name: '神行加速',
+    badge: '💎 大流量旗舰专线',
+    lineType: '大流量 IEPL 专线',
+    speed: '900 Mbps',
+    rating: {
+      overall: 9.2,
+      speed: 9.3,
+      stability: 9.2,
+      streaming: 9.2,
+      support: 9.1,
+    },
+    streamingUnlock: ['Netflix', 'Disney+', 'YouTube 8K', 'ChatGPT-4o'],
+    protocols: ['VLESS', 'Shadowsocks'],
+    price: '¥14.00',
+    packageDetails: '年付约14元/月 120GB',
+    established: '2024',
+    coupon: 'xs0077',
+    discount: '专属优惠码',
+    affiliateUrl: 'https://vipmofan01.shenxingaff.com/#/?code=nn4ohwnK',
+    reviewUrl: '/reviews/shenxing-review',
+    features: ['年付约14元/月 120GB大流量', 'IEPL专线高速带宽', '支持VLESS协议', '晚高峰 4K/8K 极速'],
+  },
+  {
+    id: 'edgenova',
+    name: '边缘节点',
+    badge: '⚡ 顶级全 IPLC 专线',
+    lineType: '全 IPLC 点对点专线',
+    speed: '950 Mbps',
+    rating: {
+      overall: 9.1,
+      speed: 9.2,
+      stability: 9.2,
+      streaming: 9.1,
+      support: 9.0,
+    },
+    streamingUnlock: ['Netflix', 'Disney+', 'YouTube 8K', 'ChatGPT-4o', 'Claude 3.5'],
+    protocols: ['Shadowsocks', 'VLESS', 'Trojan'],
+    price: '¥15.00',
+    packageDetails: '月付15元起 / 年付折后约23.8元/月 200GB',
+    established: '2024',
+    coupon: 'xk808',
+    discount: '8折优惠码',
+    affiliateUrl: 'https://wep.edgenovaaff.com/#/?code=nr2kdl68',
+    reviewUrl: '/reviews/edgenova-review',
+    features: ['全IPLC物理专线', '单节点峰值2.5Gbps', '全节点1.0x倍率', '不限同时在线设备数'],
+  },
+  {
+    id: 'kexinyun',
+    name: '可信云',
+    badge: '🛡️ 高可靠 IEPL 专线',
+    lineType: '全 IEPL 商业专线',
+    speed: '890 Mbps',
+    rating: {
+      overall: 9.0,
+      speed: 9.1,
+      stability: 9.1,
+      streaming: 9.0,
+      support: 9.0,
+    },
+    streamingUnlock: ['Netflix', 'Disney+', 'YouTube 8K', 'ChatGPT-4o', 'TikTok'],
+    protocols: ['VLESS', 'Shadowsocks'],
+    price: '¥8.00',
+    packageDetails: '年付小礼包96元/年 (月均8元 60GB)',
+    established: '2024',
+    coupon: 'MAbPRm7J',
+    discount: '专属特惠',
+    affiliateUrl: 'https://everett7623.kosingaff.com/#/?code=MAbPRm7J',
+    reviewUrl: '/reviews/kexinyun-review',
+    features: ['年付平均仅8元/月 60GB', '60+顶级专线节点', '全IEPL企业专线', '阶梯折扣低至7折'],
+  },
+  {
+    id: 'kuaili',
+    name: '快狸',
+    badge: '🚀 全球超密 IEPL 专线',
+    lineType: '全 IEPL 极速专线',
+    speed: '870 Mbps',
+    rating: {
+      overall: 8.9,
+      speed: 9.0,
+      stability: 9.0,
+      streaming: 8.9,
+      support: 8.9,
+    },
+    streamingUnlock: ['Netflix', 'Disney+', 'YouTube 8K', 'ChatGPT-4o', 'TikTok'],
+    protocols: ['VLESS', 'Shadowsocks', 'Trojan'],
+    price: '¥10.00',
+    packageDetails: '森狸年付120元/年 (月均10元 30GB)',
+    established: '2024',
+    coupon: 'MOD3Jbg2',
+    discount: '长期年付8折',
+    affiliateUrl: 'https://fanxiaobin.kuailiaff.com/#/?code=MOD3Jbg2',
+    reviewUrl: '/reviews/kuaili-review',
+    features: ['单节点最高2.5Gbps', '港日新美50+超密节点', '全节点1.0x倍率', '长期订阅低至6折'],
+  },
+];
+---
+
+<section id="comparison-matrix" class="my-12 scroll-mt-24">
+  <div class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <div>
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 mb-2">
+        <BarChart2 class="w-3.5 h-3.5" />
+        <span>2026 梯子横评评测矩阵</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+        优质机场梯子全维度对比表格
+      </h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
+        涵盖晚高峰实测速度、流媒体解锁能力、线路类型、稳定率与真实月付成本。支持复制优惠码直达官网。
+      </p>
+    </div>
+
+    <!-- 状态标签 -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+      <span class="px-3 py-1.5 rounded-lg font-medium bg-sky-500 text-white shadow-sm shadow-sky-500/30 cursor-default">全部精选</span>
+    </div>
+  </div>
+
+  <!-- 桌面与平板端：专业横向对比表格 -->
+  <div class="hidden lg:block overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 glass-card shadow-sm">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+          <th scope="col" class="py-4 px-5">机场名称 / 线路架构</th>
+          <th scope="col" class="py-4 px-4">综合评分</th>
+          <th scope="col" class="py-4 px-4">晚高峰实测下行</th>
+          <th scope="col" class="py-4 px-4">流媒体与AI解锁</th>
+          <th scope="col" class="py-4 px-4">协议支持</th>
+          <th scope="col" class="py-4 px-4">月付起步</th>
+          <th scope="col" class="py-4 px-5 text-right">优惠与购买通道</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 text-sm">
+        {airports.map((item, index) => (
+          <tr id={`matrix-${item.id}`} class="hover:bg-sky-50/40 dark:hover:bg-sky-950/20 transition-colors scroll-mt-28 target:bg-sky-500/15 target:ring-2 target:ring-sky-500/50">
+            
+            <!-- 名称与线路 -->
+            <td class="py-4 px-5">
+              <div class="flex items-start gap-3">
+                <span class={`mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold ${
+                  index === 0 
+                    ? 'bg-amber-500 text-white shadow-sm shadow-amber-500/40' 
+                    : index === 1 
+                    ? 'bg-slate-500 text-white' 
+                    : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                }`}>
+                  {index + 1}
+                </span>
+                <div>
+                  <a href={item.reviewUrl} class="font-bold text-slate-900 dark:text-white hover:text-sky-500 transition-colors flex items-center gap-1.5">
+                    <span>{item.name}</span>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-600 dark:text-sky-400 font-normal">
+                      {item.badge}
+                    </span>
+                  </a>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
+                    <Zap class="w-3.5 h-3.5 text-sky-500" />
+                    <span>{item.lineType}</span>
+                  </p>
+                </div>
+              </div>
+            </td>
+
+            <!-- 综合评分 -->
+            <td class="py-4 px-4">
+              <div class="flex items-baseline gap-1">
+                <span class="text-lg font-black text-emerald-600 dark:text-emerald-400">{item.rating.overall}</span>
+                <span class="text-[10px] text-slate-400">/ 10</span>
+              </div>
+              <div class="w-20 bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden mt-1">
+                <div class="bg-emerald-500 h-full rounded-full" style={`width: ${item.rating.overall * 10}%`}></div>
+              </div>
+            </td>
+
+            <!-- 晚高峰速度 -->
+            <td class="py-4 px-4">
+              <div class="font-bold font-mono text-slate-900 dark:text-white flex items-center gap-1.5">
+                <span class="h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span>{item.speed}</span>
+              </div>
+              <span class="text-[11px] text-slate-400">4K 8K 秒开</span>
+            </td>
+
+            <!-- 解锁 -->
+            <td class="py-4 px-4">
+              <div class="flex flex-wrap gap-1 max-w-[190px]">
+                {item.streamingUnlock.map((s) => (
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </td>
+
+            <!-- 协议 -->
+            <td class="py-4 px-4">
+              <div class="text-xs font-mono text-slate-600 dark:text-slate-300 space-y-0.5">
+                {item.protocols.map((p) => (
+                  <div>{p}</div>
+                ))}
+              </div>
+            </td>
+
+            <!-- 价格与套餐 -->
+            <td class="py-4 px-4">
+              <div class="font-bold text-slate-900 dark:text-white font-mono text-base">
+                {item.price}
+              </div>
+              <span class="text-[11px] text-slate-400 block font-medium">{item.packageDetails}</span>
+            </td>
+
+            <!-- 优惠券与直达按钮 -->
+            <td class="py-4 px-5 text-right">
+              <div class="flex flex-col items-end gap-1.5">
+                {item.coupon && (
+                  <button
+                    type="button"
+                    class="copy-coupon-btn text-[11px] inline-flex items-center gap-1 px-2 py-0.5 rounded border border-dashed border-amber-500 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 transition-colors"
+                    data-code={item.coupon}
+                    title="点击复制优惠码"
+                  >
+                    <Copy class="w-2.5 h-2.5" />
+                    <span>券: <strong>{item.coupon}</strong> ({item.discount})</span>
+                  </button>
+                )}
+                <div class="flex items-center gap-2">
+                  <a
+                    href={item.reviewUrl}
+                    class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors"
+                  >
+                    评测详情
+                  </a>
+                  <a
+                    href={item.affiliateUrl}
+                    target="_blank"
+                    rel="nofollow sponsored noopener noreferrer"
+                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 shadow-sm shadow-sky-500/30 transition-all hover:scale-105"
+                  >
+                    <span>直达官网</span>
+                    <ExternalLink class="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 移动端：卡片式自适应对比视图 -->
+  <div class="lg:hidden space-y-4">
+    {airports.map((item, index) => (
+      <div id={`matrix-${item.id}-mobile`} class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 glass-card space-y-3 scroll-mt-28 transition-all">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-2">
+            <span class={`w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold ${
+              index === 0 ? 'bg-amber-500 text-white shadow-sm shadow-amber-500/30' :
+              index === 1 ? 'bg-slate-400 text-white' :
+              index === 2 ? 'bg-amber-700/80 text-white' :
+              'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+            }`}>
+              #{index + 1}
+            </span>
+            <div>
+              <h3 class="font-bold text-base text-slate-900 dark:text-white">
+                <a href={item.reviewUrl} class="hover:text-sky-500">{item.name}</a>
+              </h3>
+              <span class="text-[10px] text-sky-600 dark:text-sky-400 font-medium">
+                {item.badge}
+              </span>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-lg font-black text-emerald-500">{item.rating.overall}分</span>
+            <div class="text-[10px] text-slate-400">综合评分</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-xs py-2 border-y border-slate-100 dark:border-slate-800">
+          <div>
+            <span class="text-slate-400 text-[11px]">线路类型:</span>
+            <p class="font-medium text-slate-800 dark:text-slate-200">{item.lineType}</p>
+          </div>
+          <div>
+            <span class="text-slate-400 text-[11px]">晚高峰下行:</span>
+            <p class="font-bold font-mono text-slate-800 dark:text-slate-200 text-emerald-600 dark:text-emerald-400">{item.speed}</p>
+          </div>
+          <div>
+            <span class="text-slate-400 text-[11px]">起步价格:</span>
+            <p class="font-bold font-mono text-slate-800 dark:text-slate-200">{item.price} / 月</p>
+          </div>
+          <div>
+            <span class="text-slate-400 text-[11px]">套餐详情:</span>
+            <p class="font-medium text-slate-800 dark:text-slate-200 truncate">{item.packageDetails}</p>
+          </div>
+        </div>
+
+        {item.coupon && (
+          <div class="flex items-center justify-between text-xs bg-amber-50 dark:bg-amber-950/30 p-2 rounded-lg border border-amber-200/50 dark:border-amber-800/40">
+            <span class="text-amber-700 dark:text-amber-400">优惠券: <strong>{item.coupon}</strong></span>
+            <button
+              type="button"
+              class="copy-coupon-btn text-xs font-semibold text-amber-600 hover:underline"
+              data-code={item.coupon}
+            >
+              点击复制
+            </button>
+          </div>
+        )}
+
+        <div class="flex items-center gap-2 pt-1">
+          <a
+            href={item.reviewUrl}
+            class="flex-1 py-2 text-center rounded-xl text-xs font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            阅读深度评测
+          </a>
+          <a
+            href={item.affiliateUrl}
+            target="_blank"
+            rel="nofollow sponsored noopener noreferrer"
+            class="flex-1 py-2 text-center rounded-xl text-xs font-bold text-white bg-sky-500 hover:bg-sky-600 flex items-center justify-center gap-1"
+          >
+            <span>直达官网</span>
+            <ExternalLink class="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script is:inline>
+  // 优惠券一键复制并反馈交互
+  document.querySelectorAll('.copy-coupon-btn').forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      const code = btn.getAttribute('data-code');
+      if (code) {
+        try {
+          await navigator.clipboard.writeText(code);
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<span>已复制!</span>';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy', err);
+        }
+      }
+    });
+  });
+
+  // 锚点平滑定位与高亮动效
+  function highlightTargetAnchor() {
+    if (window.location.hash && window.location.hash.startsWith('#matrix-')) {
+      const hash = window.location.hash;
+      const target = document.querySelector(hash) || document.querySelector(hash + '-mobile');
+      if (target) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          target.classList.add('ring-2', 'ring-sky-500', 'bg-sky-500/15');
+          setTimeout(() => target.classList.remove('ring-2', 'ring-sky-500', 'bg-sky-500/15'), 2500);
+        }, 120);
+      }
+    }
+  }
+  window.addEventListener('load', highlightTargetAnchor);
+  window.addEventListener('hashchange', highlightTargetAnchor);
+  if (document.readyState === 'complete') {
+    highlightTargetAnchor();
+  }
+</script>
+
