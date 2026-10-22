@@ -24,5 +24,8 @@ Allow: /
 Disallow: /*?*q=*
 Disallow: /*?*search=*
 
-# 标准站点地图索引地址
+# 标准站点地图索引地址与直达地图
 Sitemap: https://nodebench.cc/sitemap-index.xml
+Sitemap: https://nodebench.cc/sitemap.xml
+Sitemap: https://nodebench.cc/sitemap-0.xml
+

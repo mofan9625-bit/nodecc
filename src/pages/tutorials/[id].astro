@@ -15,6 +15,8 @@ import {
   CheckCircle2
 } from 'lucide-astro';
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const tutorials = await getCollection('tutorials');
   return tutorials.map((tutorial) => ({

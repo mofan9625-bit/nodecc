@@ -16,6 +16,8 @@ import {
   BarChart3
 } from 'lucide-astro';
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const allReviews = await getCollection('reviews');
   return Object.keys(CATEGORIES).map((id) => ({

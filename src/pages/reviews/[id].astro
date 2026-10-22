@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import ReviewLayout from '../../layouts/ReviewLayout.astro';
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const reviews = await getCollection('reviews');
   return reviews.map((review) => ({

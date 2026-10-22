@@ -126,12 +126,12 @@ for (const filePath of htmlFiles) {
   fs.writeFileSync(filePath, content, 'utf-8');
 }
 
-// 同步生成 sitemap.xml 别名文件，兼容直接访问 /sitemap.xml 的抓取器
-const sitemapIndexPath = path.join(distDir, 'sitemap-index.xml');
+// 同步生成 sitemap.xml 完整单体文件（复制自包含全部 33 条 URL 的 sitemap-0.xml，便于搜索引擎直接抓取到完整条目）
+const sitemap0Path = path.join(distDir, 'sitemap-0.xml');
 const sitemapAliasPath = path.join(distDir, 'sitemap.xml');
-if (fs.existsSync(sitemapIndexPath)) {
-  fs.copyFileSync(sitemapIndexPath, sitemapAliasPath);
-  console.log('[make-relative] Successfully created sitemap.xml alias file from sitemap-index.xml');
+if (fs.existsSync(sitemap0Path)) {
+  fs.copyFileSync(sitemap0Path, sitemapAliasPath);
+  console.log('[make-relative] Successfully created sitemap.xml containing all URLs from sitemap-0.xml');
 }
 
 console.log('[make-relative] Successfully converted all asset and navigation links to relative paths!');
