@@ -11,12 +11,12 @@
 
 | 排名 | 机场品牌 | 线路与核心架构 | 晚高峰实测 | 解锁支持 | 参考价格 / 优惠码 | 详情与直达 |
 | :---: | :--- | :--- | :---: | :---: | :---: | :---: |
-| **#1** | **云界线** | 全 IEPL 内网专线 (VLESS) | 920 Mbps | Netflix / Disney+ / YouTube 8K | ¥5.6/月起 <br> `yjx888` | [官网直达](https://nodebench.cc) |
-| **#2** | **大佬云** | 全 IEPL 内网专线 (平价黑马) | 880 Mbps | Netflix / Disney+ / ChatGPT | ¥5.6/月起 <br> `dly888` | [官网直达](https://nodebench.cc) |
-| **#3** | **环球梯** | 全 IEPL 内网专线 (超低延迟) | 850 Mbps | Netflix / Disney+ / TikTok | ¥5.6/月起 <br> `HQ66` | [官网直达](https://nodebench.cc) |
-| **#4** | **榴莲云** | 全 IEPL 内网专线 (高性价比) | 780 Mbps | 4K 流媒体全解锁 | ¥5.6/月起 <br> `ll88` | [官网直达](https://nodebench.cc) |
-| **#5** | **闪电鼠** | 全 IEPL 内网专线 (极速首选) | 820 Mbps | Netflix / Disney+ 4K | ¥5.6/月起 <br> `sds888` | [官网直达](https://nodebench.cc) |
-| **#6** | **神行加速** | 大流量 IEPL 专线 (120G起) | 900 Mbps | 4K/8K 极速秒开 | ¥14.0/月起 <br> `xs0077` | [官网直达](https://nodebench.cc) |
+| **#1** | **云界线** | 全 IEPL 内网专线 (VLESS) | 920 Mbps | Netflix / Disney+ / YouTube 8K | ¥5.6/月起 <br> `yjx888` | [直达官网](https://9625mofan01.yunjiexianaff.com/#/?code=OOYhSj0L) |
+| **#2** | **大佬云** | 全 IEPL 内网专线 (平价黑马) | 880 Mbps | Netflix / Disney+ / ChatGPT | ¥5.6/月起 <br> `dly888` | [直达官网](https://mofanvip01.dalaoyunaff.com/#/?code=QT2rqp5V) |
+| **#3** | **环球梯** | 全 IEPL 内网专线 (超低延迟) | 850 Mbps | Netflix / Disney+ / TikTok | ¥5.6/月起 <br> `HQ66` | [直达官网](https://mofanvip01.huanqiutiaff.com/#/?code=l7oLmjVU) |
+| **#4** | **榴莲云** | 全 IEPL 内网专线 (高性价比) | 780 Mbps | 4K 流媒体全解锁 | ¥5.6/月起 <br> `ll88` | [直达官网](https://mofan88.liulianyunaff.com/#/?code=ETsQBSuR) |
+| **#5** | **闪电鼠** | 全 IEPL 内网专线 (极速首选) | 820 Mbps | Netflix / Disney+ 4K | ¥5.6/月起 <br> `sds888` | [直达官网](https://mofanvip01.shandianshuaff.com/#/?code=a3GAQAXg) |
+| **#6** | **神行加速** | 大流量 IEPL 专线 (120G起) | 900 Mbps | 4K/8K 极速秒开 | ¥14.0/月起 <br> `xs0077` | [直达官网](https://vipmofan01.shenxingaff.com/#/?code=nn4ohwnK) |
 | **#7** | **边缘节点** | 全 IPLC 物理专线 (峰值 2.5Gbps) | 950 Mbps | ChatGPT / Claude / 原生住宅 IP | ¥15.0/月起 <br> `xk808` | [直达官网](https://wep.edgenovaaff.com/#/?code=nr2kdl68) |
 | **#8** | **可信云** | 全 IEPL 企业级专线 (不限设备) | 890 Mbps | 主流流媒体与 AI 全解锁 | 年付月均 ¥8 <br> `MAbPRm7J` | [直达官网](https://everett7623.kosingaff.com/#/?code=MAbPRm7J) |
 | **#9** | **快狸** | 全球超密 IEPL 专线 (2.5Gbps) | 870 Mbps | 4K 全解锁 / 跨境电商 | 极速大带宽 <br> `MOD3Jbg2` | [直达官网](https://fanxiaobin.kuailiaff.com/#/?code=MOD3Jbg2) |
