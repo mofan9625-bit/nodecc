@@ -56,6 +56,12 @@ function convertHref(rawUrl, prefix, distDir) {
   if (pathPart === '/sitemap-index.xml') {
     return `${prefix}sitemap-index.xml`;
   }
+  if (pathPart === '/sitemap.xml') {
+    return `${prefix}sitemap.xml`;
+  }
+  if (pathPart === '/sitemap-0.xml') {
+    return `${prefix}sitemap-0.xml`;
+  }
 
   // 2. 首页与带锚点/参数的首页
   if (pathPart === '' || pathPart === '/') {
@@ -120,4 +126,13 @@ for (const filePath of htmlFiles) {
   fs.writeFileSync(filePath, content, 'utf-8');
 }
 
+// 同步生成 sitemap.xml 别名文件，兼容直接访问 /sitemap.xml 的抓取器
+const sitemapIndexPath = path.join(distDir, 'sitemap-index.xml');
+const sitemapAliasPath = path.join(distDir, 'sitemap.xml');
+if (fs.existsSync(sitemapIndexPath)) {
+  fs.copyFileSync(sitemapIndexPath, sitemapAliasPath);
+  console.log('[make-relative] Successfully created sitemap.xml alias file from sitemap-index.xml');
+}
+
 console.log('[make-relative] Successfully converted all asset and navigation links to relative paths!');
+
