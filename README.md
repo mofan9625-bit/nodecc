@@ -18,8 +18,8 @@
 | **#5** | **闪电鼠** | 全 IEPL 内网专线 (极速首选) | 820 Mbps | Netflix / Disney+ 4K | ¥5.6/月起 <br> `sds888` | [直达官网](https://mofanvip01.shandianshuaff.com/#/?code=a3GAQAXg) |
 | **#6** | **神行加速** | 大流量 IEPL 专线 (120G起) | 900 Mbps | 4K/8K 极速秒开 | ¥14.0/月起 <br> `xs0077` | [直达官网](https://vipmofan01.shenxingaff.com/#/?code=nn4ohwnK) |
 | **#7** | **边缘节点** | 全 IPLC 物理专线 (峰值 2.5Gbps) | 950 Mbps | ChatGPT / Claude / 原生住宅 IP | ¥15.0/月起 <br> `xk808` | [直达官网](https://wep.edgenovaaff.com/#/?code=nr2kdl68) |
-| **#8** | **可信云** | 全 IEPL 企业级专线 (不限设备) | 890 Mbps | 主流流媒体与 AI 全解锁 | 年付月均 ¥8 <br> `MAbPRm7J` | [直达官网](https://everett7623.kosingaff.com/#/?code=MAbPRm7J) |
-| **#9** | **快狸** | 全球超密 IEPL 专线 (2.5Gbps) | 870 Mbps | 4K 全解锁 / 跨境电商 | 极速大带宽 <br> `MOD3Jbg2` | [直达官网](https://fanxiaobin.kuailiaff.com/#/?code=MOD3Jbg2) |
+| **#8** | **可信云** | 全 IEPL 企业级专线 (不限设备) | 890 Mbps | 主流流媒体与 AI 全解锁 | 年付月均 ¥8 <br> `kxy80` | [直达官网](https://everett7623.kosingaff.com/#/?code=MAbPRm7J) |
+| **#9** | **快狸** | 全球超密 IEPL 专线 (2.5Gbps) | 870 Mbps | 4K 全解锁 / 跨境电商 | 极速大带宽 <br> `kl888` | [直达官网](https://fanxiaobin.kuailiaff.com/#/?code=MOD3Jbg2) |
 
 ---
 
