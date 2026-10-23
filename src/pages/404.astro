@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { 
+  Compass, 
+  Home, 
+  Search, 
+  Layers, 
+  BarChart3, 
+  BookOpen, 
+  ArrowRight,
+  Flame,
+  ShieldCheck
+} from 'lucide-astro';
+
+export const prerender = true;
+---
+
+<Layout
+  title="404 - 页面未找到 · 节点实验室"
+  description="抱歉，您访问的网页不存在或已被迁移。节点实验室提供 2026 最全机场梯子实测排行榜、晚高峰测速报告与全平台客户端配置指南。"
+  type="website"
+>
+  <main class="relative min-h-[75vh] flex items-center justify-center py-16 sm:py-24 overflow-hidden">
+    <!-- 背景动态光晕 -->
+    <div aria-hidden="true" class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-sky-500/10 dark:bg-sky-500/8 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/4 right-1/4 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-2xl mx-auto px-4 sm:px-6 text-center space-y-8">
+      
+      <!-- 404 故障代码大徽标 -->
+      <div class="inline-flex flex-col items-center">
+        <div class="relative">
+          <span class="text-8xl sm:text-9xl font-black tracking-tighter bg-gradient-to-r from-sky-500 via-indigo-500 to-cyan-400 bg-clip-text text-transparent font-mono select-none">
+            404
+          </span>
+          <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-slate-900 text-sky-400 text-xs font-mono font-bold border border-sky-500/30 shadow-lg">
+            NODE_NOT_FOUND
+          </div>
+        </div>
+      </div>
+
+      <!-- 引导文案 -->
+      <div class="space-y-3">
+        <h1 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+          哎呀，当前网络节点已偏离航线
+        </h1>
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-lg mx-auto leading-relaxed">
+          你访问的页面可能已被迁移、重构或更名。别担心，节点实验室的核心测速数据与配置指南仍在安全运行中。
+        </p>
+      </div>
+
+      <!-- 快速搜索触发器 -->
+      <div class="max-w-md mx-auto">
+        <button
+          type="button"
+          onclick="document.getElementById('global-search-btn')?.click()"
+          class="w-full flex items-center justify-between px-4 py-3 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-sky-500 dark:hover:border-sky-500 transition-all text-left text-sm text-slate-400 group cursor-pointer"
+        >
+          <div class="flex items-center gap-2.5">
+            <Search class="w-4 h-4 text-sky-500 group-hover:scale-110 transition-transform" />
+            <span>输入关键词搜索评测或教程...</span>
+          </div>
+          <kbd class="px-2 py-0.5 text-xs bg-slate-100 dark:bg-slate-800 rounded font-mono text-slate-500 border border-slate-200 dark:border-slate-700">⌘K</kbd>
+        </button>
+      </div>
+
+      <!-- 常用核心入口导流网格 -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-left">
+        <a
+          href="/"
+          class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 hover:bg-sky-50 dark:hover:bg-slate-800 hover:border-sky-400 transition-all group"
+        >
+          <Home class="w-5 h-5 text-sky-500 mb-2 group-hover:-translate-y-0.5 transition-transform" />
+          <div class="font-bold text-xs text-slate-900 dark:text-white">返回首页</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">返回站点主页</div>
+        </a>
+
+        <a
+          href="/reviews"
+          class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 hover:bg-sky-50 dark:hover:bg-slate-800 hover:border-sky-400 transition-all group"
+        >
+          <Layers class="w-5 h-5 text-indigo-500 mb-2 group-hover:-translate-y-0.5 transition-transform" />
+          <div class="font-bold text-xs text-slate-900 dark:text-white">机场评测</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">9 款深度实测</div>
+        </a>
+
+        <a
+          href="/comparison-matrix"
+          class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 hover:bg-sky-50 dark:hover:bg-slate-800 hover:border-sky-400 transition-all group"
+        >
+          <BarChart3 class="w-5 h-5 text-emerald-500 mb-2 group-hover:-translate-y-0.5 transition-transform" />
+          <div class="font-bold text-xs text-slate-900 dark:text-white">横评矩阵</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">多维指标横向比对</div>
+        </a>
+
+        <a
+          href="/tutorials"
+          class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 hover:bg-sky-50 dark:hover:bg-slate-800 hover:border-sky-400 transition-all group"
+        >
+          <BookOpen class="w-5 h-5 text-amber-500 mb-2 group-hover:-translate-y-0.5 transition-transform" />
+          <div class="font-bold text-xs text-slate-900 dark:text-white">新手教程</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">客户端快速上手</div>
+        </a>
+      </div>
+
+    </div>
+  </main>
+</Layout>

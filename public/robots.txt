@@ -5,12 +5,27 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-# Bingbot 专项友好抓取配置
+# Bingbot 专项友好抓取配置（移除延迟限制，保障秒级索引）
 User-agent: bingbot
 Allow: /
-Crawl-delay: 1
 
 User-agent: msnbot
+Allow: /
+
+# AI 搜索与大模型答案引擎优化（赋能 Perplexity / SearchGPT / Apple 引用推荐）
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Google-Extended
 Allow: /
 
 # 国内与全球主流爬虫优化
@@ -20,7 +35,7 @@ Allow: /
 User-agent: YisouSpider
 Allow: /
 
-# 禁止抓取搜索交互参数及动态查询
+# 禁止抓取搜索交互参数及动态查询（避免重复内容与抓取配额浪费）
 Disallow: /*?*q=*
 Disallow: /*?*search=*
 
@@ -28,4 +43,3 @@ Disallow: /*?*search=*
 Sitemap: https://nodebench.cc/sitemap-index.xml
 Sitemap: https://nodebench.cc/sitemap.xml
 Sitemap: https://nodebench.cc/sitemap-0.xml
-

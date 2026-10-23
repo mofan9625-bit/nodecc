@@ -36,7 +36,7 @@ export default defineConfig({
         ) {
           item.changefreq = 'daily';
           item.priority = 0.9;
-        } else if (item.url.includes('/tutorials')) {
+        } else if (item.url.includes('/tutorials') || item.url.includes('/methodology')) {
           item.changefreq = 'weekly';
           item.priority = 0.85;
         } else if (item.url.includes('/category') || item.url.includes('/tools')) {

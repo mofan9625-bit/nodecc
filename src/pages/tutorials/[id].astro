@@ -38,6 +38,9 @@ const relatedTutorials = allTutorials
 <Layout
   title={`${tutorial.data.title} · 新手教程 - 节点实验室`}
   description={tutorial.data.description}
+  articleDate={new Date(tutorial.data.pubDate)}
+  updatedDate={tutorial.data.updatedDate ? new Date(tutorial.data.updatedDate) : undefined}
+  image={tutorial.data.image || '/images/og-cover.png'}
   type="article"
 >
   <main class="relative py-10 md:py-14 lg:py-16">

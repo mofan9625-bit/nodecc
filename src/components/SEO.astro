@@ -19,6 +19,8 @@ export interface Props {
     currency: string;
   };
   bingVerifyId?: string;
+  googleVerifyId?: string;
+  breadcrumbs?: Array<{ name: string; url: string }>;
 }
 
 const {
@@ -31,23 +33,25 @@ const {
   rating,
   productName,
   price,
-  bingVerifyId = 'A8293FC912D8A910E89B10023B', // 默认 Bing Webmaster 验证占位，站长可在后台配置
+  bingVerifyId = 'A8293FC912D8A910E89B10023B', // Bing Webmaster 验证标识
+  googleVerifyId,
+  breadcrumbs: customBreadcrumbs,
 } = Astro.props;
 
-const siteUrl = Astro.site ? Astro.site.toString() : 'https://nodebench.cc';
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/+$/, '') : 'https://nodebench.cc';
 const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
-const socialImageURL = new URL(image, siteUrl).href;
+const socialImageURL = image.startsWith('http') ? image : new URL(image, siteUrl).href;
 
 // 站点基本信息
 const siteName = 'NodeLab 节点实验室';
 const formattedTitle = title.includes(' - 节点实验室') 
   ? title 
-  : `${title.replace(/[\s|·-]+(AirportRadar|机场测速雷达).*$/i, '')} - 节点实验室`;
+  : `${title.replace(/[\s|·-]+(AirportRadar|机场测速雷达|节点实验室).*$/i, '')} - 节点实验室`;
 
 // 组装 JSON-LD 结构化数据
 const schemas: any[] = [];
 
-// 1. 全局 WebSite 结构化数据
+// 1. 全局 WebSite 结构化数据（含站内搜索 SearchAction）
 schemas.push({
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -61,7 +65,60 @@ schemas.push({
   },
 });
 
-// 2. 如果是评测详情页，注入高级 Review + Product 结构化数据（对 Bing 和 Google 富文本摘要极度友好）
+// 2. 自动生成或使用传入的面包屑导航（BreadcrumbList Schema，触发 Google / Bing 结构化面包屑展示）
+let breadcrumbItems: Array<{ name: string; url: string }> = [];
+
+if (customBreadcrumbs && customBreadcrumbs.length > 0) {
+  breadcrumbItems = customBreadcrumbs;
+} else {
+  const pathname = Astro.url.pathname.replace(/\/+$/, '');
+  breadcrumbItems.push({ name: '首页', url: `${siteUrl}/` });
+
+  if (pathname.startsWith('/reviews')) {
+    breadcrumbItems.push({ name: '机场评测', url: `${siteUrl}/reviews/` });
+    if (pathname !== '/reviews') {
+      const cleanName = title.replace(/[\s|·-]+(节点实验室|机场深度评测|深度评测).*$/i, '').trim();
+      breadcrumbItems.push({ name: cleanName, url: canonicalURL });
+    }
+  } else if (pathname.startsWith('/tutorials')) {
+    breadcrumbItems.push({ name: '新手教程', url: `${siteUrl}/tutorials/` });
+    if (pathname !== '/tutorials') {
+      const cleanName = title.replace(/[\s|·-]+(新手教程|节点实验室).*$/i, '').trim();
+      breadcrumbItems.push({ name: cleanName, url: canonicalURL });
+    }
+  } else if (pathname.startsWith('/category')) {
+    breadcrumbItems.push({ name: '专题分类', url: `${siteUrl}/category/` });
+    if (pathname !== '/category') {
+      const cleanName = title.replace(/[\s|·-]+(节点实验室).*$/i, '').trim();
+      breadcrumbItems.push({ name: cleanName, url: canonicalURL });
+    }
+  } else if (pathname === '/comparison-matrix') {
+    breadcrumbItems.push({ name: '横评对比矩阵', url: canonicalURL });
+  } else if (pathname === '/speedtest-reports') {
+    breadcrumbItems.push({ name: '晚高峰测速报告', url: canonicalURL });
+  } else if (pathname === '/tools') {
+    breadcrumbItems.push({ name: '科学上网工具', url: canonicalURL });
+  } else if (pathname === '/methodology') {
+    breadcrumbItems.push({ name: '评测标准与方法论', url: canonicalURL });
+  } else if (pathname === '/disclaimer') {
+    breadcrumbItems.push({ name: '法律免责声明', url: canonicalURL });
+  }
+}
+
+if (breadcrumbItems.length > 1) {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': breadcrumbItems.map((item, idx) => ({
+      '@type': 'ListItem',
+      'position': idx + 1,
+      'name': item.name,
+      'item': item.url,
+    })),
+  });
+}
+
+// 3. 评测详情页：注入高级 Review + Product 结构化数据
 if (type === 'review' && productName && rating) {
   schemas.push({
     '@context': 'https://schema.org',
@@ -82,7 +139,7 @@ if (type === 'review' && productName && rating) {
       'url': siteUrl,
       'logo': {
         '@type': 'ImageObject',
-        'url': `${siteUrl}/favicon.svg`,
+        'url': `${siteUrl}/images/logo-512.png`, // 标准 512x512 PNG 位图，契合 Google 富媒体测试硬性规范
       },
     },
     'itemReviewed': {
@@ -114,6 +171,38 @@ if (type === 'review' && productName && rating) {
     },
   });
 }
+
+// 4. 新手教程 / 技术文章详情页：注入 TechArticle 结构化数据（赋能 Google / Bing 技术文章索引）
+if (type === 'article') {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    'headline': title,
+    'description': description,
+    'image': socialImageURL,
+    'datePublished': articleDate?.toISOString() || new Date().toISOString(),
+    'dateModified': (updatedDate || articleDate || new Date()).toISOString(),
+    'inLanguage': 'zh-CN',
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': canonicalURL,
+    },
+    'author': {
+      '@type': 'Organization',
+      'name': '节点实验室',
+      'url': siteUrl,
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': siteName,
+      'url': siteUrl,
+      'logo': {
+        '@type': 'ImageObject',
+        'url': `${siteUrl}/images/logo-512.png`,
+      },
+    },
+  });
+}
 ---
 
 <!-- 基础元数据 -->
@@ -127,18 +216,17 @@ if (type === 'review' && productName && rating) {
 <meta name="googlebot" content="index, follow" />
 <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large" />
 
-<!-- 微软 Bing Webmaster 认证与 IndexNow 标识 -->
+<!-- 搜索引擎站长平台认证 -->
 <meta name="msvalidate.01" content={bingVerifyId} />
+{googleVerifyId && <meta name="google-site-verification" content={googleVerifyId} />}
 
-<!-- 多语言与全球 GEO 矩阵路由预留 -->
+<!-- 语言与规范网址（规范化 zh-CN，移除导致冲突的重复多语言虚标） -->
 <link rel="alternate" hreflang="zh-CN" href={canonicalURL} />
-<link rel="alternate" hreflang="zh-TW" href={canonicalURL} />
-<link rel="alternate" hreflang="x-default" href={canonicalURL} />
 <meta name="geo.region" content="HK" />
 <meta name="geo.placename" content="Hong Kong" />
 
-<!-- Open Graph / 社交分享卡片 -->
-<meta property="og:type" content={type === 'review' ? 'article' : type} />
+<!-- Open Graph / 社交分享卡片 (Facebook, Telegram, Discord, WeChat) -->
+<meta property="og:type" content={type === 'review' || type === 'article' ? 'article' : 'website'} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={formattedTitle} />
 <meta property="og:description" content={description} />
@@ -149,7 +237,7 @@ if (type === 'review' && productName && rating) {
 {articleDate && <meta property="article:published_time" content={articleDate.toISOString()} />}
 {updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
 
-<!-- Twitter Card -->
+<!-- Twitter Card (X 官方大图卡片) -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:url" content={canonicalURL} />
 <meta name="twitter:title" content={formattedTitle} />

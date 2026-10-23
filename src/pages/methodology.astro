@@ -1,0 +1,225 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { 
+  ShieldCheck, 
+  Activity, 
+  Server, 
+  Wifi, 
+  Timer, 
+  BarChart3, 
+  CheckCircle2, 
+  AlertTriangle,
+  Lock,
+  ArrowLeft,
+  ChevronRight,
+  Flame,
+  Award,
+  FlaskConical
+} from 'lucide-astro';
+
+export const prerender = true;
+---
+
+<Layout
+  title="实验室评测标准与测速方法论 · 节点实验室"
+  description="NodeLab 节点实验室公开 2026 独立评测标准与自动化遥测机制。公开千兆双线网络环境、晚高峰黄金测试窗口、流媒体与 AI 原生住宅 IP 判定准则，坚持客观中立与拒绝虚标。"
+  type="article"
+>
+  <main class="relative py-10 md:py-14 lg:py-16">
+    <!-- 背景光晕装饰 -->
+    <div aria-hidden="true" class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-sky-500/10 dark:bg-sky-500/8 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/3 right-0 w-80 h-80 bg-indigo-500/8 dark:bg-indigo-600/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      
+      <!-- 面包屑导航 -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+        <a href="/" class="hover:text-sky-600 dark:hover:text-sky-400 flex items-center gap-1">
+          <ArrowLeft class="w-3.5 h-3.5" />
+          <span>首页</span>
+        </a>
+        <ChevronRight class="w-3 h-3 text-slate-400" />
+        <span class="text-slate-900 dark:text-white font-medium">实验室评测标准与方法论</span>
+      </nav>
+
+      <!-- 头部英雄区 -->
+      <header class="glass-card rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-9 lg:p-11 shadow-sm space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+          <FlaskConical class="w-3.5 h-3.5" />
+          <span>E-E-A-T 权威实测标准体系</span>
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+          NodeLab 测速方法论与实验室标准
+        </h1>
+
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+          在网络代理与科学上网服务良莠不齐的当下，节点实验室始终坚持“<strong class="text-slate-900 dark:text-white font-bold">拒绝虚标、拒绝闲时测速套路、保持客观中立</strong>”的初心。本页面详尽公开我们的测试环境、指标权重模型与真实专线判定逻辑。
+        </p>
+
+        <div class="pt-2 flex items-center gap-4 text-xs text-slate-400 font-mono">
+          <span>● 版本: 2026.04-R2</span>
+          <span>● 更新周期: 每日晚高峰持续遥测</span>
+        </div>
+      </header>
+
+      <!-- 核心章节 1：测试网络与硬件环境公开 -->
+      <section class="glass-card rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6">
+        <div class="flex items-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+          <div class="p-2.5 rounded-xl bg-sky-500/10 text-sky-500">
+            <Wifi class="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">一、基准测试网络与硬件拓扑</h2>
+            <p class="text-xs text-slate-400">消除本地设备瓶颈，确保测试反映服务商真实网络质量</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-600 dark:text-slate-300">
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/80 space-y-2">
+            <span class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-1.5">
+              <Server class="w-4 h-4 text-sky-500" />
+              <span>国内宽带双栈接入</span>
+            </span>
+            <ul class="space-y-1.5 pl-4 list-disc text-slate-500 dark:text-slate-400">
+              <li>广东电信 FTTH 1000Mbps 下行 / 100Mbps 上行</li>
+              <li>上海联通 FTTH 1000Mbps 下行 / 100Mbps 上行</li>
+              <li>全光纤直连，排除校园网、多级路由或二级运营商干扰</li>
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/80 space-y-2">
+            <span class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-1.5">
+              <Activity class="w-4 h-4 text-emerald-500" />
+              <span>测试终端硬件配置</span>
+            </span>
+            <ul class="space-y-1.5 pl-4 list-disc text-slate-500 dark:text-slate-400">
+              <li>Intel Core i9 / 32GB DDR5 / 2.5G 物理有线网卡直连</li>
+              <li>内核：开源 Clash Meta (Mihomo) & Sing-box 最新稳定版</li>
+              <li>TUN 虚拟网卡模式，排除浏览器扩展与三方软件代理串扰</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 核心章节 2：黄金晚高峰测速窗口 -->
+      <section class="glass-card rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6">
+        <div class="flex items-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-500">
+            <Timer class="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">二、晚高峰（20:30~22:30）绝对测速窗口</h2>
+            <p class="text-xs text-slate-400">拒绝凌晨/白天闲时虚假测速，只在骨干网最拥堵的时刻压测</p>
+          </div>
+        </div>
+
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+          许多不良测评使用凌晨 3 点或白天上班时段的数据忽悠用户，标榜“千兆跑满”。然而在晚间 20:30~22:30 国际出口拥堵高峰期，公网隧道往往剧烈丢包。
+        </p>
+
+        <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/20 text-xs text-amber-900 dark:text-amber-200 space-y-2">
+          <strong class="font-bold flex items-center gap-1.5">
+            <AlertTriangle class="w-4 h-4 text-amber-500" />
+            <span>我们的硬性测速准则：</span>
+          </strong>
+          <ul class="space-y-1 pl-4 list-disc">
+            <li>所有下行峰值带宽与延迟数据，必须在 <strong>20:30~22:30 晚高峰黄金时段</strong> 采集。</li>
+            <li>每次测速进行 3 次重复采样取算术中位数，排除单次波动。</li>
+            <li>记录 ICMP 1000 次连续 Ping 的网络丢包率（Packet Loss）与抖动标准差（Jitter）。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 核心章节 3：真实专线鉴别与流媒体标准 -->
+      <section class="glass-card rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6">
+        <div class="flex items-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+          <div class="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-500">
+            <Lock class="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">三、真实专线鉴别与流媒体 / AI 判定</h2>
+            <p class="text-xs text-slate-400">穿透包装看本质，防止“公网套壳”欺瞒消费者</p>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/80 space-y-2">
+            <h3 class="font-bold text-slate-900 dark:text-white">1. IPLC / IEPL 真实内网专线鉴别</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-xs">
+              通过端到端 MTR 多跳跟踪，真实专线在入境后直达边界内网网关，公网路由跳数严格 ≤ 3 跳。晚高峰丢包率必须稳定低于 <strong>0.5%</strong>，超出阈值者不予授予“纯专线”认证标签。
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/80 space-y-2">
+            <h3 class="font-bold text-slate-900 dark:text-white">2. 流媒体 4K/8K 与原生住宅 IP 判定</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-xs">
+              采用真实 Netflix 账户、Disney+ 及 YouTube 8K 60FPS 视频进行首帧加载耗时监测；并通过 IPQS 及 MaxMind 数据库进行出口 IP 住宅属性与风险评分判定（Fraud Score &lt; 30 分方判定为纯净）。
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/80 space-y-2">
+            <h3 class="font-bold text-slate-900 dark:text-white">3. ChatGPT-4o 与 Claude 3.5 连通性</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-xs">
+              模拟高频 API 调试与客户端登录，测试是否频繁弹出 Cloudflare 拼图验证码、Access Denied 阻断或账号被封禁风险。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 核心章节 4：五维评分模型与客观性承诺 -->
+      <section class="glass-card rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 space-y-6">
+        <div class="flex items-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+          <div class="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-500">
+            <Award class="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">四、五维评分计算模型与客观承诺</h2>
+            <p class="text-xs text-slate-400">公开透明的加权算法，杜绝充值买榜</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+            <div class="text-sky-500 font-bold font-mono text-base">30%</div>
+            <div class="text-slate-700 dark:text-slate-300 font-semibold mt-1">晚高峰速度</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">峰值吞吐量</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+            <div class="text-emerald-500 font-bold font-mono text-base">30%</div>
+            <div class="text-slate-700 dark:text-slate-300 font-semibold mt-1">网络稳定性</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">丢包与抖动</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+            <div class="text-violet-500 font-bold font-mono text-base">20%</div>
+            <div class="text-slate-700 dark:text-slate-300 font-semibold mt-1">流媒体/AI</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">纯净住宅IP</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+            <div class="text-amber-500 font-bold font-mono text-base">10%</div>
+            <div class="text-slate-700 dark:text-slate-300 font-semibold mt-1">性价比</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">每GB成本</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+            <div class="text-rose-500 font-bold font-mono text-base">10%</div>
+            <div class="text-slate-700 dark:text-slate-300 font-semibold mt-1">售后工单</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">故障恢复效率</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 text-xs text-slate-600 dark:text-slate-300 space-y-2">
+          <strong class="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+            <ShieldCheck class="w-4 h-4 text-emerald-500" />
+            <span>NodeLab 独立性原则宣言：</span>
+          </strong>
+          <p class="leading-relaxed text-slate-500 dark:text-slate-400">
+            本实验室所有评测账号均为站长匿名自费购买测试。我们不接受任何服务商的付费排名干扰；凡发生跑路、严重虚标或断流超 48 小时的品牌，将第一时间在全站降权或打上风险警示标签。
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>
