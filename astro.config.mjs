@@ -10,6 +10,19 @@ export default defineConfig({
   build: {
     format: 'directory' // 生成 clean URL: /reviews/speedcat/ 结构，最利于 Bing 和 Google 收录
   },
+  redirects: {
+    '/reviews/yunjiexian': '/reviews/yunjiexian-review/',
+    '/reviews/dalaoyun': '/reviews/dalaoyun-review/',
+    '/reviews/huanqiuti': '/reviews/huanqiuti-review/',
+    '/reviews/liulianyun': '/reviews/liulianyun-review/',
+    '/reviews/shandianshu': '/reviews/shandianshu-review/',
+    '/reviews/shenxing': '/reviews/shenxing-review/',
+    '/reviews/edgenode': '/reviews/edgenova-review/',
+    '/reviews/edgenova': '/reviews/edgenova-review/',
+    '/reviews/kosing': '/reviews/kexinyun-review/',
+    '/reviews/kexinyun': '/reviews/kexinyun-review/',
+    '/reviews/kuaili': '/reviews/kuaili-review/',
+  },
   server: {
     open: true, // 本地启动 dev 或 preview 时自动在默认浏览器中打开页面
     port: 4321,
