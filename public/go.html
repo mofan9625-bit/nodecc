@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 严格屏蔽所有搜索引擎爬取、索引与快照 -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="referrer" content="no-referrer" />
+  <title>正在安全跳转至官网 - 节点实验室</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(17, 24, 39, 0.75);
+      --border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --primary: #0ea5e9;
+      --primary-hover: #0284c7;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --card-bg: rgba(255, 255, 255, 0.85);
+        --border: rgba(0, 0, 0, 0.08);
+        --text-main: #0f172a;
+        --text-sub: #64748b;
+      }
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .redirect-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 40px 32px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
+    }
+    .spinner-box {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 24px;
+      position: relative;
+    }
+    .spinner {
+      width: 100%;
+      height: 100%;
+      border: 3px solid rgba(14, 165, 233, 0.15);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    p {
+      color: var(--text-sub);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .target-box {
+      background: rgba(14, 165, 233, 0.08);
+      border: 1px dashed rgba(14, 165, 233, 0.3);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--primary);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      word-break: break-all;
+      margin-bottom: 24px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      color: #ffffff;
+      border: none;
+    }
+    .btn-primary:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-sub);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: var(--text-main);
+    }
+    .error-view {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="redirect-card">
+    <div id="loading-view">
+      <div class="spinner-box">
+        <div class="spinner"></div>
+      </div>
+      <h1 id="title-text">正在安全跳转中...</h1>
+      <p id="desc-text">您即将前往测速认证的官方授权节点服务商，请稍候。</p>
+      <div id="target-box" class="target-box" style="display:none;"></div>
+      <a id="manual-btn" href="#" class="btn btn-primary" style="display:none;">若未自动跳转，点击此处直达 ↗</a>
+    </div>
+
+    <div id="error-view" class="error-view">
+      <div style="font-size: 44px; margin-bottom: 16px;">🔍</div>
+      <h1>未找到指定的目标服务</h1>
+      <p>跳转参数不正确或该服务已下架或调整，请返回首页查看最新 2026 机场评测推荐。</p>
+      <a href="/" class="btn btn-primary">返回节点实验室首页</a>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // 统一 AFF 真实跳转目标映射表
+      const REDIRECT_MAP = {
+        'yunjiexian': 'https://9625mofan01.yunjiexianaff.com/#/?code=OOYhSj0L',
+        'dalaoyun': 'https://mofanvip01.dalaoyunaff.com/#/?code=QT2rqp5V',
+        'huanqiuti': 'https://mofanvip01.huanqiutiaff.com/#/?code=l7oLmjVU',
+        'liulianyun': 'https://mofan88.liulianyunaff.com/#/?code=ETsQBSuR',
+        'shandianshu': 'https://mofanvip01.shandianshuaff.com/#/?code=a3GAQAXg',
+        'shenxing': 'https://vipmofan01.shenxingaff.com/#/?code=nn4ohwnK',
+        'edgenova': 'https://wep.edgenovaaff.com/#/?code=nr2kdl68',
+        'kexinyun': 'https://everett7623.kosingaff.com/#/?code=MAbPRm7J',
+        'kosing': 'https://everett7623.kosingaff.com/#/?code=MAbPRm7J',
+        'kuaili': 'https://fanxiaobin.kuailiaff.com/#/?code=MOD3Jbg2'
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      let targetKey = (params.get('id') || params.get('to') || '').toLowerCase().trim();
+
+      // 支持从 hash 或 pathname 获取（如 /go.html#yunjiexian）
+      if (!targetKey && window.location.hash) {
+        targetKey = window.location.hash.replace(/^#\/?/, '').toLowerCase().trim();
+      }
+
+      const targetUrl = REDIRECT_MAP[targetKey];
+
+      if (targetUrl) {
+        const manualBtn = document.getElementById('manual-btn');
+        manualBtn.href = targetUrl;
+        manualBtn.rel = 'nofollow sponsored noopener noreferrer';
+        manualBtn.style.display = 'inline-flex';
+
+        // 极速 301 客户端重定向（replace 防止后退死循环）
+        setTimeout(function() {
+          window.location.replace(targetUrl);
+        }, 120);
+      } else {
+        document.getElementById('loading-view').style.display = 'none';
+        document.getElementById('error-view').style.display = 'block';
+      }
+    })();
+  </script>
+</body>
+</html>
