@@ -46,8 +46,8 @@ function getUrlsFromSitemap() {
       const matches = content.match(/<loc>(https:\/\/nodebench\.cc\/[^<]*)<\/loc>/g);
       if (matches && matches.length > 0) {
         const urls = matches.map((m) => m.replace(/<\/?loc>/g, '').trim());
-        // 过滤排除 sitemap 自身文件
-        const filtered = urls.filter((u) => !u.endsWith('.xml'));
+        // 过滤排除 sitemap 自身文件以及 /go 重定向承接页
+        const filtered = urls.filter((u) => !u.endsWith('.xml') && !u.includes('/go'));
         if (filtered.length > 0) {
           return Array.from(new Set(filtered));
         }

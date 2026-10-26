@@ -34,6 +34,7 @@ export default defineConfig({
     }),
     mdx(),
     sitemap({
+      filter: (page) => !page.includes('/go') && !page.includes('/go.html'),
       changefreq: 'weekly',
       priority: 0.8,
       lastmod: new Date(),

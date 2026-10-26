@@ -1,75 +1,41 @@
 User-agent: *
 Allow: /
-# 屏蔽 AFF 推广跳转承接页与重定向路径（防止外链权重泄露与爬虫抓取）
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 Disallow: /*?*q=*
 Disallow: /*?*search=*
 
 # Googlebot 抓取优化
 User-agent: Googlebot
 Allow: /
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 
-# Bingbot 专项友好抓取配置（移除延迟限制，保障秒级索引）
+# Bingbot 专项友好抓取配置（移除延迟限制，保障秒级索引，顺畅抓取无报错）
 User-agent: bingbot
 Allow: /
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 
 User-agent: msnbot
 Allow: /
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 
 # AI 搜索与大模型答案引擎优化（赋能 Perplexity / SearchGPT / Apple 引用推荐）
 User-agent: GPTBot
 Allow: /
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 
 User-agent: PerplexityBot
 Allow: /
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 
 User-agent: ClaudeBot
 Allow: /
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 
 User-agent: Applebot-Extended
 Allow: /
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 
 User-agent: Google-Extended
 Allow: /
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 
 # 国内与全球主流爬虫优化
 User-agent: Baiduspider
 Allow: /
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 
 User-agent: YisouSpider
 Allow: /
-Disallow: /go.html
-Disallow: /go/
-Disallow: /go/*
 
 # 标准站点地图索引地址与直达地图
 Sitemap: https://nodebench.cc/sitemap-index.xml
