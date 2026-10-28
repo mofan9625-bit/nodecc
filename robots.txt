@@ -1,18 +1,38 @@
 User-agent: *
 Allow: /
+Disallow: /cdn-cgi/
+Disallow: /go
+Disallow: /go/
+Disallow: /go.html
+Disallow: /go?*
 Disallow: /*?*q=*
 Disallow: /*?*search=*
 
 # Googlebot 抓取优化
 User-agent: Googlebot
 Allow: /
+Disallow: /cdn-cgi/
+Disallow: /go
+Disallow: /go/
+Disallow: /go.html
+Disallow: /go?*
 
-# Bingbot 专项友好抓取配置（移除延迟限制，保障秒级索引，顺畅抓取无报错）
+# Bingbot 专项友好抓取配置（移除延迟限制，保障秒级索引，屏蔽中间跳转与内部脚本）
 User-agent: bingbot
 Allow: /
+Disallow: /cdn-cgi/
+Disallow: /go
+Disallow: /go/
+Disallow: /go.html
+Disallow: /go?*
 
 User-agent: msnbot
 Allow: /
+Disallow: /cdn-cgi/
+Disallow: /go
+Disallow: /go/
+Disallow: /go.html
+Disallow: /go?*
 
 # AI 搜索与大模型答案引擎优化（赋能 Perplexity / SearchGPT / Apple 引用推荐）
 User-agent: GPTBot

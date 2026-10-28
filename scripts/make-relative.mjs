@@ -19,17 +19,7 @@ if (fs.existsSync(sitemap0Path)) {
   console.log('[post-build] ✔ 成功同步生成包含全量 URL 的 sitemap.xml！');
 }
 
-// 2. 检测是否为离线打包模式（如生成 dist.zip 供 Windows 本地双击预览）
-const isOfflineMode = process.argv.includes('--offline') || process.env.OFFLINE === 'true';
-
-if (!isOfflineMode) {
-  console.log('\x1b[32m✔ [post-build] 生产环境规范化构建完成：保持 Astro 原生 Clean URL 与 Canonical 规范路径一致（利于 Google/Bing 权重聚焦与 PageRank 流转）。\x1b[0m');
-  console.log('[post-build] 如需生成本地无服务器双击预览的离线包，请执行: npm run build:offline');
-  process.exit(0);
-}
-
-console.log('[post-build] 检测到 --offline 参数，正在将 HTML 内链与资源转为相对路径...');
-
+// 2. 补齐所有静态 HTML（含重定向页与独立承接页）的 meta description 标签，彻底消除搜索引擎扫描“缺少元描述”报错
 function getAllHtmlFiles(dir) {
   let results = [];
   const list = fs.readdirSync(dir);
@@ -44,6 +34,38 @@ function getAllHtmlFiles(dir) {
   }
   return results;
 }
+
+const allHtmlFiles = getAllHtmlFiles(distDir);
+let fixedMetaCount = 0;
+for (const filePath of allHtmlFiles) {
+  let content = fs.readFileSync(filePath, 'utf-8');
+  if (!content.includes('name="description"') && !content.includes("name='description'")) {
+    const defaultDesc = '<meta name="description" content="节点实验室（NodeBench）- 专业网络加速与节点服务综合评测平台。">';
+    if (content.includes('</title>')) {
+      content = content.replace('</title>', `</title>\n  ${defaultDesc}`);
+    } else if (content.includes('<head>')) {
+      content = content.replace('<head>', `<head>\n  ${defaultDesc}`);
+    } else if (/<!doctype html>/i.test(content)) {
+      content = content.replace(/<!doctype html>/i, `<!doctype html><head>${defaultDesc}</head>`);
+    }
+    fs.writeFileSync(filePath, content, 'utf-8');
+    fixedMetaCount++;
+  }
+}
+if (fixedMetaCount > 0) {
+  console.log(`[post-build] ✔ 成功为 ${fixedMetaCount} 个重定向或承接 HTML 补齐 meta description 标签！`);
+}
+
+// 3. 检测是否为离线打包模式（如生成 dist.zip 供 Windows 本地双击预览）
+const isOfflineMode = process.argv.includes('--offline') || process.env.OFFLINE === 'true';
+
+if (!isOfflineMode) {
+  console.log('\x1b[32m✔ [post-build] 生产环境规范化构建完成：保持 Astro 原生 Clean URL 与 Canonical 规范路径一致（利于 Google/Bing 权重聚焦与 PageRank 流转）。\x1b[0m');
+  console.log('[post-build] 如需生成本地无服务器双击预览的离线包，请执行: npm run build:offline');
+  process.exit(0);
+}
+
+console.log('[post-build] 检测到 --offline 参数，正在将 HTML 内链与资源转为相对路径...');
 
 function convertHref(rawUrl, prefix, distDir) {
   if (!rawUrl.startsWith('/') || rawUrl.startsWith('//')) {

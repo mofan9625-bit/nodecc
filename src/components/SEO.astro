@@ -44,9 +44,16 @@ const socialImageURL = image.startsWith('http') ? image : new URL(image, siteUrl
 
 // 站点基本信息
 const siteName = 'NodeLab 节点实验室';
+const brandSuffix = ' - 节点实验室';
+let baseCleanTitle = title.replace(/[\s|·-]+(AirportRadar|机场测速雷达|节点实验室).*$/i, '').trim();
+
+// 搜索引擎标题安全上限控制（严格控制在 65 字符以内，防止 Bing 报“标题太长”警告及 SERP 截断）
+if (baseCleanTitle.length + brandSuffix.length > 65) {
+  baseCleanTitle = baseCleanTitle.slice(0, 65 - brandSuffix.length - 1).trim() + '…';
+}
 const formattedTitle = title.includes(' - 节点实验室') 
-  ? title 
-  : `${title.replace(/[\s|·-]+(AirportRadar|机场测速雷达|节点实验室).*$/i, '')} - 节点实验室`;
+  ? (title.length > 68 ? `${title.slice(0, 64).trim()}…` : title)
+  : `${baseCleanTitle}${brandSuffix}`;
 
 // 组装 JSON-LD 结构化数据
 const schemas: any[] = [];
